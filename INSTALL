@@ -1,0 +1,18 @@
+build and install zincwallet
+----------------------------
+
+1. clone the breadwallet git repository: 
+
+   `git clone https://github.com/voisine/breadwallet.git`
+
+2. open breadwallet/BreadWallet.xcodeproj in XCode 5.0 or later
+
+3. select Product->Run
+
+
+**WARNING:** installation on jailbroken devices is strongly discouraged
+
+any jailbreak app can grant itself keychain entitlements to your wallet seed and
+rob you by self-signing as described [here](http://www.saurik.com/id/8) and
+including `<key>application-identifier</key><string>org.voisine.*</string>` in
+its .entitlements file

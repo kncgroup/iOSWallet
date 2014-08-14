@@ -1,0 +1,291 @@
+/* No comment provided by engineer. */
+"\nbitcoin network fee + %@ (%@)" = "\nbitcoin network fee + %1$@ (%2$@)";
+
+/* No comment provided by engineer. */
+"%@ from:%@" = "%1$@ from:%2$@";
+
+/* No comment provided by engineer. */
+"%@ is for 'bits'. %@ = 1 bitcoin" = "%1$@ is for 'bits'. %2$@ = 1 bitcoin";
+
+/* No comment provided by engineer. */
+"%@ to:%@" = "%1$@ to:%2$@";
+
+/* No comment provided by engineer. */
+"%@ within wallet" = "%@ within wallet";
+
+/* No comment provided by engineer. */
+"%d confirmations  " = "%d confirmations  ";
+
+/* No comment provided by engineer. */
+"1 confirmation  " = "1 confirmation  ";
+
+/* No comment provided by engineer. */
+"\"%@\" is not a backup phrase word" = "\"%@\" is not a backup phrase word";
+
+/* No comment provided by engineer. */
+"about" = "about";
+
+/* No comment provided by engineer. */
+"backup phrase" = "backup phrase";
+
+/* No comment provided by engineer. */
+"backup phrase doesn't match" = "backup phrase doesn't match";
+
+/* No comment provided by engineer. */
+"backup phrase must have %d words" = "backup phrase must have %d words";
+
+/* No comment provided by engineer. */
+"bad backup phrase" = "bad backup phrase";
+
+/* No comment provided by engineer. */
+"bad payment request" = "bad payment request";
+
+/* No comment provided by engineer. */
+"bad payment request URL" = "bad payment request URL";
+
+/* No comment provided by engineer. */
+"bad payment URL" = "bad payment URL";
+
+/* No comment provided by engineer. */
+"bad signature" = "bad signature";
+
+/* No comment provided by engineer. */
+"Bitcoin address" = "Bitcoin address";
+
+/* No comment provided by engineer. */
+"Bitcoin addresses can also be copied to the clipboard. A bitcoin address always starts with '1'." = "Bitcoin addresses can also be copied to the clipboard. A bitcoin address always starts with '1'.";
+
+/* No comment provided by engineer. */
+"bitcoin payments can't be less than %@" = "bitcoin payments can't be less than %@";
+
+/* No comment provided by engineer. */
+"bitcoin transaction not signed" = "bitcoin transaction not signed";
+
+/* No comment provided by engineer. */
+"cancel" = "cancel";
+
+/* No comment provided by engineer. */
+"caution" = "caution";
+
+/* No comment provided by engineer. */
+"checking private key balance..." = "checking private key balance...";
+
+/* No comment provided by engineer. */
+"clipboard doesn't contain a valid bitcoin address" = "clipboard doesn't contain a valid bitcoin address";
+
+/* No comment provided by engineer. */
+"close app" = "close app";
+
+/* No comment provided by engineer. */
+"confirm payment" = "confirm payment";
+
+/* No comment provided by engineer. */
+"CONFIRM WIPE" = "CONFIRM WIPE";
+
+/* No comment provided by engineer. */
+"connect timeout" = "connect timeout";
+
+/* No comment provided by engineer. */
+"continue" = "continue";
+
+/* No comment provided by engineer. */
+"copied" = "copied";
+
+/* No comment provided by engineer. */
+"copy" = "copy";
+
+/* No comment provided by engineer. */
+"couldn't make payment" = "couldn't make payment";
+
+/* No comment provided by engineer. */
+"couldn't sweep balance" = "couldn't sweep balance";
+
+/* No comment provided by engineer. */
+"couldn't transmit payment to bitcoin network" = "couldn't transmit payment to bitcoin network";
+
+/* No comment provided by engineer. */
+"DEVICE SECURITY COMPROMISED\nAny 'jailbreak' app can control this device and steal funds." = "DEVICE SECURITY COMPROMISED\nAny 'jailbreak' app can control this device and steal funds.";
+
+/* No comment provided by engineer. */
+"DEVICE SECURITY COMPROMISED\nAny 'jailbreak' app can control this device and steal funds. Wipe this wallet immediately and restore on a secure device." = "DEVICE SECURITY COMPROMISED\nAny 'jailbreak' app can control this device and steal funds. Wipe this wallet immediately and restore on a secure device.";
+
+/* No comment provided by engineer. */
+"DO NOT let anyone see your backup phrase or they can spend your bitcoins." = "DO NOT let anyone see your backup phrase or they can spend your bitcoins.";
+
+/* No comment provided by engineer. */
+"email" = "email";
+
+/* No comment provided by engineer. */
+"email not configured" = "email not configured";
+
+/* No comment provided by engineer. */
+"error signing bitcoin transaction" = "error signing bitcoin transaction";
+
+/* No comment provided by engineer. */
+"error signing transaction" = "error signing transaction";
+
+/* No comment provided by engineer. */
+"ignore" = "ignore";
+
+/* No comment provided by engineer. */
+"import private key" = "import private key";
+
+/* No comment provided by engineer. */
+"insufficient funds" = "insufficient funds";
+
+/* No comment provided by engineer. */
+"INVALID  " = "INVALID  ";
+
+/* No comment provided by engineer. */
+"Let others scan this QR code to get your bitcoin address. Anyone can send bitcoins to your wallet by transferring them to your address." = "Let others scan this QR code to get your bitcoin address. Anyone can send bitcoins to your wallet by transferring them to your address.";
+
+/* No comment provided by engineer. */
+"missing certificate" = "missing certificate";
+
+/* No comment provided by engineer. */
+"moved  " = "moved  ";
+
+/* No comment provided by engineer. */
+"new phrase" = "new phrase";
+
+/* No comment provided by engineer. */
+"no peers found" = "no peers found";
+
+/* No comment provided by engineer. */
+"not a bitcoin QR code" = "not a bitcoin QR code";
+
+/* No comment provided by engineer. */
+"not a valid bitcoin address" = "not a valid bitcoin address";
+
+/* No comment provided by engineer. */
+"not a valid private key" = "not a valid private key";
+
+/* No comment provided by engineer. */
+"not connected to the bitcoin network" = "not connected to the bitcoin network";
+
+/* No comment provided by engineer. */
+"ok" = "ok";
+
+/* No comment provided by engineer. */
+"pending  " = "pending  ";
+
+/* No comment provided by engineer. */
+"Receive bitcoins at this address: %@" = "Receive bitcoins at this address: %@";
+
+/* No comment provided by engineer. */
+"received  " = "received  ";
+
+/* No comment provided by engineer. */
+"recent transactions" = "recent transactions";
+
+/* No comment provided by engineer. */
+"recieved" = "recieved";
+
+/* No comment provided by engineer. */
+"remove fee" = "remove fee";
+
+/* No comment provided by engineer. */
+"request expired" = "request expired";
+
+/* No comment provided by engineer. */
+"requested network \"%@\" instead of \"%@\"" = "requested network \"%1$@\" instead of \"%2$@\"";
+
+/* No comment provided by engineer. */
+"rescan blockchain" = "rescan blockchain";
+
+/* No comment provided by engineer. */
+"Scan someone else's QR code to get their bitcoin address. You can send a payment to anyone with an address." = "Scan someone else's QR code to get their bitcoin address. You can send a payment to anyone with an address.";
+
+/* No comment provided by engineer. */
+"Screenshots are visible to other apps and devices. Generate a new backup phrase and keep it secret." = "Screenshots are visible to other apps and devices. Generate a new backup phrase and keep it secret.";
+
+/* No comment provided by engineer. */
+"Screenshots are visible to other apps and devices. Your funds are at risk. Transfer your balance to another wallet." = "Screenshots are visible to other apps and devices. Your funds are at risk. Transfer your balance to another wallet.";
+
+/* No comment provided by engineer. */
+"Send %@ (%@) from this private key into your wallet? The bitcoin network will receive a fee of %@ (%@)." = "Send %1$@ (%2$@) from this private key into your wallet? The bitcoin network will receive a fee of %3$@ (%4$@).";
+
+/* No comment provided by engineer. */
+"sent  " = "sent  ";
+
+/* No comment provided by engineer. */
+"sent!" = "sent!";
+
+/* No comment provided by engineer. */
+"settings" = "settings";
+
+/* No comment provided by engineer. */
+"show" = "show";
+
+/* No comment provided by engineer. */
+"sms" = "sms";
+
+/* No comment provided by engineer. */
+"sms not currently available" = "sms not currently available";
+
+/* No comment provided by engineer. */
+"swept!" = "swept!";
+
+/* No comment provided by engineer. */
+"the app will now close" = "the app will now close";
+
+/* No comment provided by engineer. */
+"the bitcoin network will receive a fee of %@ (%@)" = "the bitcoin network will receive a fee of %1$@ (%2$@)";
+
+/* No comment provided by engineer. */
+"The standard bitcoin network fee is %@ (%@). Removing this fee may increase confirmation time." = "The standard bitcoin network fee is %1$@ (%2$@). Removing this fee may increase confirmation time.";
+
+/* No comment provided by engineer. */
+"This is your bitcoin address. Tap to copy it or send it by email or sms. The address will change each time you receive funds, but old addresses always work." = "This is your bitcoin address. Tap to copy it or send it by email or sms. The address will change each time you receive funds, but old addresses always work.";
+
+/* No comment provided by engineer. */
+"This is your bitcoin balance. Bitcoin is a currency. The exchange rate changes with the market." = "This is your bitcoin balance. Bitcoin is a currency. The exchange rate changes with the market.";
+
+/* No comment provided by engineer. */
+"this payment address is already in your wallet" = "this payment address is already in your wallet";
+
+/* No comment provided by engineer. */
+"this private key is already in your wallet" = "this private key is already in your wallet";
+
+/* No comment provided by engineer. */
+"this private key is empty" = "this private key is empty";
+
+/* No comment provided by engineer. */
+"to: %@" = "to: %@";
+
+/* No comment provided by engineer. */
+"transaction canceled, network timeout" = "transaction canceled, network timeout";
+
+/* No comment provided by engineer. */
+"transaction fees would cost more than the funds available on this private key (due to tiny \"dust\" deposits)" = "transaction fees would cost more than the funds available on this private key (due to tiny \"dust\" deposits)";
+
+/* No comment provided by engineer. */
+"unexpected response from %@" = "unexpected response from %@";
+
+/* No comment provided by engineer. */
+"unkown address" = "unkown address";
+
+/* No comment provided by engineer. */
+"unrecognized address" = "unrecognized address";
+
+/* No comment provided by engineer. */
+"unsupported or corrupted document" = "unsupported or corrupted document";
+
+/* No comment provided by engineer. */
+"unsupported signature type" = "unsupported signature type";
+
+/* No comment provided by engineer. */
+"unsupported url" = "unsupported url";
+
+/* No comment provided by engineer. */
+"untrusted certificate" = "untrusted certificate";
+
+/* No comment provided by engineer. */
+"unverified  " = "unverified  ";
+
+/* No comment provided by engineer. */
+"WARNING" = "WARNING";
+
+/* No comment provided by engineer. */
+"wipe" = "wipe";
+

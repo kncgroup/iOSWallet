@@ -1,0 +1,265 @@
+
+/* General */
+"OK" = "Ok";
+"YES" = "Yes";
+"NO" = "No";
+"CANCEL" = "Cancel";
+"SHARE" = "Share";
+"ALERT_ERROR_TITLE" = "An problem occurred";
+"REMOVE" = "Remove";
+"DELETE" = "Delete";
+"EDIT" = "Edit";
+"CAN_NOT_SEND_MAIL" = "Unable to send e-mail";
+"NEXT" = "Next";
+"RETRY" = "Retry";
+"MESSAGE" = "Message";
+
+/* Main */
+
+"HOME" = "Home";
+"SEND" = "Send";
+"RECEIVE" = "Receive";
+
+/* Home */
+"HOME_HISTORY" = "Transactions";
+"HOME_FROM" = "from";
+"HOME_TO" = "to";
+"NO_TRANSACTIONS" = "You have no transactions yet.";
+"HOME_SEG_SENT" = "Sent";
+"HOME_SEG_ALL" = "All";
+"HOME_SEG_RECEIVED" = "Received";
+"HOME_TX_HAS_NO_ADDRESS" = "Transaction has no address";
+"HOME_UNKNOWN_COUNTERPART" = "Unknown";
+
+"CONNECTION_WARNING_TITLE" = "Connection error";
+"CONNECTION_WARNING_MESSAGE" = "Unable to connect to network";
+"CONNECTION_WARNING_NO_INTERNET_CONNECTION" = "No internet connection";
+
+/* Send */
+"SEND_FEE_CONFIRMATION_PATTERN" = "Total %@ incl. fee %@";
+"CONFIRM_FEE_TITLE" = "Transaction fee confirmation";
+"SEND_ERROR_TITLE" = "Problem sending coins";
+"ERROR_SENDING" = "";
+"SEND_INVALID_ADDRESS" = "Invalid address";
+
+"SEND_ERROR_VERIFY_CONTACT_ADDRESS" = "Unable to verify contact´s address";
+"SEND_ERROR_VERIFY_CONTACT_ADDRESS_MESSAGE" = "This user may have changed their address but we can´t check for you at the moment";
+"SEND_TO_UNVALIDATED_ADDRESS" = "Send anyway";
+"VERIFYING_ADDRESS" = "Verifying";
+
+"SEND_SAVE_AND_SEND" = "Save & Send";
+"SEND_CONTACT_HAS_NEW_ADDRESS_PATTERN" = "%@ has a new address";
+"SEND_CONTACT_HAS_NEW_ADDRESS_MESSAGE_PATTERN" = "New address:\n%@\n\nOld address:\n%@";
+"SEND_CONTACT_COINS" = "Send bitcoins";
+"ERROR_SENDING_MONEY_TO_YOURSELF" = "This payment address is already in your wallet";
+"EMPTY_WALLET" = "Empty Wallet";
+"SAVE_CONTACT_TITLE_PATTERN" = "Add %@ to your Address Book";
+"SIGNING" = "Signing";
+"SENDING" = "Sending";
+"SENT" = "Sent";
+
+"BITEASY_BROWSE_TX" = "Browse on biteasy";
+
+"SEND_TOO_SMALL_AMOUNT" = "Too small amount";
+"SEND_TOO_LARGE_AMOUNT" = "Too large amount";
+
+"ERROR_SENDING_SIGNING" = "Unable to sign transaction";
+"TX_IMPOSSIBLE_FEE_TITLE" = "Unable to perform transaction";
+"TX_IMPOSSIBLE_FEE_MESSAGE" = "The transaction fee for the size of this transaction will be to large to implement";
+
+/* Share */
+"SHARE_FACEBOOK_PATTERN" = "I'm usign the KnC Bitcoin Wallet for iOS, it makes sharing Bitcoin with friends super easy! %@";
+"SHARE_TWITTER_PATTERN" = "I'm usign the KnC Bitcoin Wallet for iOS, it makes sharing Bitcoin with friends super easy! %@";
+"SHARE_WEIBO_PATTERN" = "I'm usign the KnC Bitcoin Wallet for iOS, it makes sharing Bitcoin with friends super easy! %@";
+"SHARE_MESSAGE_PATTERN" = "I'm usign the KnC Bitcoin Wallet for iOS, it makes sharing Bitcoin with friends super easy! %@";
+"SHARE_MAIL_PATTERN" = "Hi!\n\nPlease use the following address to send me coins: %@";
+
+/* Settings */
+
+"SETTINGS" = "Settings";
+"SETTINGS_GENERAL" = "General";
+"SETTINGS_PREFERENCES" = "Preferences";
+
+"SETTINGS_ACCESS_PIN_TITLE" = "Configure access pin";
+"SETTINGS_ACCESS_PIN_SUBTITLE" = "";
+
+"SETTINGS_REMOVE_PIN_TITLE" = "Remove access pin";
+"SETTINGS_REMOVE_PIN_SUBTITLE" = "Not recommended";
+
+"SETTINGS_REMOVE_DETAILS_TITLE" = "Remove my details";
+"SETTINGS_REMOVE_DETAILS_SUBTITLE" = "Remove number, address from KnC Directory";
+"SETTINGS_REMOVE_DETAILS_REMOVING" = "Removing";
+"SETTINGS_REMOVE_DETAILS_REMOVED" = "Removed";
+
+"SETTINGS_DENOMINATION_TITLE" = "Denomination";
+"SETTINGS_DENOMINATION_SUBTITLE" = "Unit to show assets in";
+"SETTINGS_REMOVE_DETAILS_REMOVING" = "Removing";
+
+"SETTINGS_WALLET" = "Wallet";
+"SETTINGS_RESTORE_WALLET_TITLE" = "Start or restore wallet";
+"SETTINGS_RESTORE_WALLET_SUBTITLE" = "Wipe this wallet and start or restore another";
+
+"SETTINGS_SHOW_BACKUP_PHRASE_TITLE" = "Show wallet seed";
+"SETTINGS_SHOW_BACKUP_PHRASE_SUBTITLE" = "Displays this wallets 12 word seed";
+
+"SETTINGS_EXCHANGE_RATES_TITLE" = "Exchange Rates";
+"SETTINGS_EXCHANGE_RATES_SUBTITLE" = "Select your local fiat currency";
+
+"SETTINGS_ADDRESS_BOOK_TITLE" = "Manage Contacts";
+"SETTINGS_ADDRESS_BOOK_SUBTITLE" = "";
+
+"SETTINGS_BACKUP_WALLET_TITLE" = "Backup Wallet";
+"SETTINGS_BACKUP_WALLET_SUBTITLE" = "Backup your wallet seed to iCloud or e-mail";
+"SETTINGS_BACKUP_ICLOUD_TITLE" = "Saved backups";
+"SETTINGS_BACKUP_ICLOUD_SUBTITLE" = "View your stored iCloud backups";
+
+"SETTINGS_EMPTY_WALLET_TITLE" = "Empty Wallet";
+"SETTINGS_EMPTY_WALLET_SUBTITLE" = "Send all your Bitcoin to another address";
+
+"SETTINGS_ABOUT" = "About";
+"SETTINGS_ABOUT_TITLE" = "About";
+"SETTINGS_ABOUT_SUBTITLE" = "Information about KnC Wallet app";
+"SETTINGS_LICENSE_TITLE" = "Credits";
+"SETTINGS_LICENSE_SUBTITLE" = "Used open source projects";
+
+"SETTINGS_HINTS_TITLE" = "Hints & Tips";
+"SETTINGS_HINTS_SUBTITLE" = "Show important information";
+
+"SETTINGS_DIAGNOSTICS" = "Diagnostics";
+"SETTINGS_RESET_BLOCKCHAIN_TITLE" = "Reset Blockchain";
+"SETTINGS_RESET_BLOCKCHAIN_SUBTITLE" = "Resetting Blockchain will take a while.";
+"SETTINGS_RESET_BLOCKCHAIN_MESSAGE" = "Would you like to reset and replay the blockchain?\n\nThis will temporarily hide your wallet balance and remove transactions. Both will recover as blockchain sync progresses. Your wallet is not deleted.";
+
+"SETTINGS_ADVANCED" = "Advanced Wallet Settings";
+
+/* Wizard */
+"WIZARD_WELCOME_TEXT" = "Please confirm your phone number to continue";
+"WIZARD_WELCOME_TEXT_LONG" = "Send and receive bitcoin using your phone contacts list.\n\nTo provide this service we will scan your phone contacts.\n\nPlease confirm your phone number to continue";
+"WIZARD_SMS_SENT_TO" = "SMS sent to";
+"WIZARD_PHONE_NUMBER_CONFIRMATION_TITLE" = "Phone number confirmation";
+"WIZARD_PHONE_NUMBER_MESSAGE_PATTERN" = "\n%@\n\nIs your phone number above correct?";
+
+"WIZARD_LET_ME_IN" = "Let me in";
+"WIZARD_SUBMIT_CODE" = "Submit code";
+
+"WIZARD_INVALID_PHONE_NUMBER" = "Please check your phone number";
+
+"SMS_VERIFICATION_FAILED_TITLE" = "Resend SMS code?";
+"SMS_VERIFICATION_FAILED_MESSAGE" = "Please check your inbox for verification code. Otherwise try to re-send a verification.";
+"SMS_RESEND" = "Resend";
+
+/* Address book */
+"ADDRESS_BOOK" = "Contacts";
+"ADD_TO_ADDRESS_BOOK" = "Add contact";
+"EDIT_IN_ADDRESS_BOOK" = "Edit contact";
+"ADD_NEW_CONTACT" = "New contact";
+"ADDRESS_BOOK_INVALID_ADDRESS" = "Invalid address";
+"CONTACT_IMAGE" = "Image";
+"PICK_FROM_CAMERA" = "Take Photo";
+"PICK_FROM_GALLERY" = "Choose Photo";
+"CONTACT_ADD_PHOTO" = "Add photo";
+"CONTACT_CHANGE_PHOTO" = "Change photo";
+
+"CONTACT_OLD_ADDRESSES" = "Other known addresses";
+"NAME" = "Name";
+"ADDRESS" = "Address";
+"TELEPHONENUMBER" = "Telephonenumber";
+
+"CONTACTS_UPDATED_PATTERN" = "%i contacts added";
+"ERROR_DOWNLOADING_CONTACTS" = "Error downloading contacts";
+
+/* Backup phrase */
+"BACKUP_PHRASE" = "Backup phrase";
+
+/* Restore */
+"START_RESTORE_WALLET" = "Start/restore wallet";
+"START_RESTORE_TOP_INFO" = "Enter your 12 word seed...";
+"START_RESTORE_NO_PHRASE" = "No seed entered";
+"START_RESTORE_SUCCESS" = "Success";
+"GENERATE_RANDOM_SEED" = "Generate random seed";
+
+
+/* Exchange rates */
+"EXCHANGE_RATES" = "Exchange Rates";
+
+/* Scan QR */
+"SCAN_NOT_VALID_ADDRESS" = "This is not a valid bitcoin address";
+"SCAN_COULD_NOT_MAKE_PAYMENT" = "Couldn't make payment";
+"SCAN_NOT_BITCOIN_QR" = "This is not a bitcoin QR code";
+
+
+/* Country picker */
+"PICK_COUNTRY" = "Your country";
+
+
+/* Pin */
+"PIN_TITLE" = "Configure an access PIN";
+"PIN_ENTER_NEW_PIN" = "Enter your new PIN";
+"PIN_CONFIRM_NEW_PIN" = "Confirm PIN";
+"PIN_ENTER_CURRENT_PIN" = "Enter Your Current PIN";
+"PIN_FOOTER_NOTICE_TEXT" = "Please be careful, KnC are unable to reset this PIN";
+"PIN_APP_IS_LOCKED" = "Enter your PIN code";
+"PIN_ERROR_UNLOCK" = "Invalid PIN, please try again";
+"PIN_SET_SUCCESS" = "Access PIN Changed";
+"PIN_SET_ERROR" = "Invalid PIN";
+"PIN_REMOVED_SUCCESS" = "PIN removed";
+"PIN_CONFIRM_MISMATCH" = "Your PINs do not match";
+
+/* Backup */
+"BACKUP" = "Backup";
+"BACKUP_DOCUMENT_SAVED" = "Saved!";
+"BACKUP_DOCUMENT_ERROR_SAVE" = "Unable to save document";
+"BACKUP_ICLOUD_NOT_AVAILABLE" = "iCloud isn't available. Please make sure your phone is configured correctly to use iCloud.";
+"BACKUP_DOCUMENT_NO_PHRASE" = "No 12 word seed found";
+"BACKUP_OPEN_SUCCESS" = "Success";
+"BACKUP_OPEN_FAILURE" = "Unable to open file";
+
+"BACKUP_PHRASE_ICLOUD_TITLE" = "iCloud";
+"BACKUP_PHRASE_ICLOUD_SUBTITLE" = "Save your wallet seed to iCloud";
+"BACKUP_SEND_EMAIL_TITLE" = "E-Mail";
+"BACKUP_SEND_EMAIL_SUBTITLE" = "Send your backup seed in an encrypted container";
+"BACKUP_ENTER_PASSWORD" = "Enter a password";
+"BACKUP_NEED_BETTER_PASSWORD" = "Please enter a better, stronger password";
+"BACKUP_CAN_NOT_SEND_MAIL" = "Unable to send e-mail, please try again later.";
+"BACKUP_MAIL_SENT" = "E-mail sent";
+"BACKUP_MAIL_SUBJECT" = "KnC Wallet Backup";
+"BACKUP_MAIL_BODY" = "This email contains an encrypted backup of you KnC Wallet 12 word seed. This can be used to open your wallet in any compatible Bitcoin wallet software.\n Please see http://www.kncwallet.com for more information.";
+"BACKUP_ICLOUD_FILES" = "Backups";
+"BACKUP_RESTORE_ENTER_PASSWORD" = "Enter password";
+"BACKUP_RESTORE" = "Restore";
+"BACKUP_RESTORE_FILE" = "File";
+"BACKUP_WRONG_PASSWORD" = "Wrong password";
+"BACKUP_SAME_SEED" = "This is valid, encrypted, current backup.";
+"BACKUP_RESTORE_PROGRESS_STARTED" = "Backup unlocked";
+
+"BACKUP_RESTORE_SELECTED_PHRASE_TITLE" = "Restore this backup phrase?";
+"BACKUP_ALREADY_EXIST" = "This backup phrase already exists in your iCloud";
+
+/* Denomination */
+"DENOMINATION" = "Denomination";
+"DIGITS" = "digits";
+
+/* About */
+"ABOUT_VERSION" = "Version";
+"ABOUT_FOOTER" = "The application is released by KnC Group AB.  To the fullest extent permitted by applicable law, KnC Group AB disclaim all warranties and limit all liabilities.  The application is provided on an ‘as is’ basis.  Please see www.kncwallet.com for details.";
+
+/* License */
+"LICENSE_TITLE_CODE" = "Open source projects";
+"LICENSE_CODE_FOOTER" = "This app uses code from the open source projects above";
+"LICENSE_TITLE_GFX" = "Graphics";
+"OPEN_WEB_PAGE_FOR_LICENSE" = "Open web page in Safari?";
+
+/* Label */
+"LABEL" = "Private Note";
+"TX_LABEL" = "Private Note";
+"TX_LABEL_PLACEHOLDER" = "Enter note";
+"TX_LABEL_EDIT" = "Edit note";
+"TX_LABEL_SET" = "Set label";
+"TX_LABEL_PREVIOUSLY_USED" = "Previously used notes";
+"ALERT_NEW_TX_LABEL_TITLE" = "Add a note to the transaction?";
+"ALERT_NEW_TX_LABEL_MESSAGE" = "Use notes as a reminder of the transaction's purpose";
+
+
+/* Hints and tips */
+"HINTS_TITLE" = "Hints & Tips";
+"HINTS_LONG_TEXT" = "The tips below are important. If you are new to Bitcoin, please read them carefully.\n\nMore details and helpful information can be found on our website www.kncwallet.com\n\nPlease backup your 12 word seed, we do not keep a copy of this and we cannot recover this if your phone is lost or stolen. KnC do not keep copies of your wallet or any of your passwords or PINs.\n\nBitcoins are stored on your phone. If you lose your phone you may lose your Bitcoins!.\n\nOnly carry small amounts of Bitcoin on your phone, treat them like physical cash, just carry what you need for a day or 2.\n\nBefore you uninstall or delete your app data, remember to move your Bitcoins to another wallet first as deleting your app data will delete your Bitcoins!\n\nUse a PIN to protect your phone and your KnC Wallet. You can enable the KnC Wallet PIN in the settings page.\n\nFinally, have fun with Bitcoin!\n\nFor full terms and conditions of use, please see www.kncwallet.com\n\n";
