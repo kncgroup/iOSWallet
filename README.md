@@ -5,7 +5,7 @@ An [SPV](https://en.bitcoin.it/wiki/Thin_Client_Security#Header-Only_Clients),
 [BIP32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki)
 deterministic bitcoin wallet for iOS.
 
-KnC Wallet is open source and available under the terms of the MIT license.
+KnC Wallet is open source and available under the terms of the MIT license. It is a fork of the excellent [breadwallet](https://github.com/voisine/breadwallet).
 
 **WARNING:** installation on jailbroken devices is strongly discouraged
 
