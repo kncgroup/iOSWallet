@@ -1,0 +1,134 @@
+END-USER LICENSE AGREEMENT FOR THE KNC DIRECTORY SERVER  (“EULA”) 
+
+This app and its accompanying online or electronic documentation (the “App”) is licensed to us under the MIT licence and you are permitted to use the App in accordance with the terms of that license.
+
+The App communicates with a remote directory server (the “KnC Directory Server”), which has been produced by and is the property of KnC Group AB (“KnC”). KnC is referred to as “us”, “we”, and “our” in this EULA. We are a company registered in Sweden, with company number 556931-9725. Our registered office is at Birger Jarlsgatan 33, 111 45 Stockholm, Sweden (“KNC”).  You are permitted to use the KnC Directory Server in accordance with this EULA. 
+
+Where this EULA contradicts the rights in the App licensed under the MIT licence, the terms of the MIT licence will prevail in respect of the contradictory part only.
+
+You can contact us by post to KnCMiner Birger Jarlsgatan 33, 5tr 111 45 Stockholm, Sweden or by email to info@kncwallet.com
+
+
+THE TERMS AND CONDITIONS BELOW SET OUT THE AGREEMENT BETWEEN YOU (“YOU”) AND US FOR THE USE OF THE KNC DIRECTORY SERVER SO PLEASE READ THEM CAREFULLY. 
+
+BY DOWNLOADING AND USING THE APP YOU ARE AGREEING TO BE BOUND BY AND BECOME A PARTY TO THIS EULA AND THE PRIVACY POLICY. IF YOU DO NOT AGREE TO ALL OF THE TERMS OF THIS EULA OR PRIVACY POLICY YOU SHOULD NOT USE THE KNC DIRECTORY SERVER.
+
+1.	IMPORTANT TERMS
+1.1	Some risks associated with bitcoin are set out in clause 3 below.
+1.2	The EULA limits KnC’s liability as set out in clause 14 below. 
+1.3	If you are under the age of 18 you must get your parent or guardian’s permission to use the KnC Directory Server. 
+1.4	Your use of the KnC Directory Server is subject to your compliance with any terms and conditions required by Google from time to time.
+
+2.	ABOUT THE APP
+2.1	The App is enables users to operate their own bitcoin wallet, by storing bitcoin directly onto the phone running the App.  Bitcoin can be sent between the App wallet and the wallets of other App users or to any other bitcoin address.
+2.2	The App enables users to make bitcoin transactions.  KnC is not a money transmitter or a money services business.  
+2.3	The privacy policy is in an important document which governs our use of the personal and anonymous data that we obtain from your use of the KnC Directory Server. We only use this data in accordance with our privacy policy.
+
+3.	ABOUT BITCOIN
+3.1	Bitcoins may not be appropriate for everyone.  Before making use of bitcoin you should learn about them to ensure they are appropriate for you.  As with all currencies, there are some risks associated with using bitcoin.  Some of the risks particular to bitcoin include:
+3.1.1	loss of bitcoin due to hardware malfunction – if the phone running the App breaks, you could lose the bitcoin stored on that phone;
+3.1.2	currency fluctuation - the price of bitcoin may fall sharply and may even fall to zero;
+3.1.3	bitcoin transactions may be unconfirmed for a period of time.  Although very unlikely, some bitcoin transactions may never be confirmed - bitcoin transactions which are unconfirmed are not completed; 
+3.1.4	bitcoin transactions are irreversible - if you send bitcoin to the wrong person, you may be unable to recover those bitcoin;
+3.1.5	bitcoin may be lost if you lose or forget any PINs or passwords necessary to access and spend those bitcoin;
+3.1.6	unknown technical defects inherent in bitcoin; and
+3.1.7	new regulation which impacts on bitcoin use.
+3.2	By agreeing to this EULA or by using the KnC Directory Server, you are indicating your acceptance of the risks associated with bitcoin.
+
+4.	USER ACCOUNTS
+4.1	By using the KnC Directory Server, you confirm that you are either over 18 years of age, or if you are under 18 years old, that you are 13 years of age or older and you have obtained your parent or guardian’s consent to use the KnC Directory Server.
+4.2	When you run the App for the first time, a wallet will be created and paired with your phone number.  Other users of the App will be able to send bitcoin to this wallet by using your phone number.
+4.3	In accordance with our privacy policy, we will remotely store your phone number and other information necessary to enable people to send bitcoin to you.  
+4.4	When the wallet is created, we will also allocate you with a corresponding “Private Key”.  The Private Key enables any bitcoin sent to the App wallet to be spent.  For security reasons, we do not keep a backup of your Private Key.  
+4.5	IF YOUR PRIVATE KEYS ARE LOST OR DELETED, YOU WILL BE UNABLE TO SPEND THE BITCOIN STORED IN THE APP.  More information on how you can backup your own Private Key is set out below.
+4.6	You have the option to use a PIN to secure access to the App.  If you activate the PIN, it will be required to spend any stored bitcoin. 
+4.7	Your PIN is personal to you and must not be disclosed to any other person.   We are entitled to assume that any use of the App is made by you.  You are solely responsible and liable for any use of the App. 
+4.8	IT IS UP TO YOU TO TAKE WHATEVER SECURITY MEASURES YOU THINK NECESSARY TO ENSURE THAT YOUR PIN AND YOUR PHONE ARE SECURE.  WE ARE NOT LIABLE FOR ANY IMPROPER USE OF THE APP OR YOUR PIN BY YOU OR ANY OTHER PERSON. IF YOU THINK ANY OTHER PERSON KNOWS YOUR PIN, OR THAT YOUR PHONE HAS BEEN USED OR ACCESSED BY ANY OTHER PERSON WITHOUT YOUR PERMISSION, YOU MUST CHANGE YOUR PIN AND INFORM US IMMEDIATELY.
+5.	YOUR USE OF THE KNC DIRECTORY SERVER
+5.1	As a condition of using the KnC Directory Server, our privacy policy shall apply. You confirm that you have read the privacy policy and that you understand how we collect personal and anonymous data. All data that we collect is used to understand and improve your use of the App to provide the functionality of the App, or as otherwise set out in the privacy policy.
+5.2	Subject to the privacy settings in the App which you set, we may send you push notifications whilst the App is installed.
+5.3	When making transactions using the App, you are responsible for deciding what tax should or should not be applied, paid, reported or collected.
+5.4	You must not (whether yourself or through a third party acting on your behalf or for your benefit), attempt, whether or not successfully, to:
+5.4.1	reproduce, distribute, publically display or perform, translate, modify, adapt, create derivative works from, deconstruct, reverse engineer, decompile or disassemble in any manner any Further Features which may be made available subject to clause 10 or any part of any of them, including but not limited to any character, graphic, associated software or proprietary communications protocol used by the software or any utilities, applications, emulators or tools derived therefrom;
+5.4.2	mine, buy, sell, exchange, hold, own or otherwise use or exploit bitcoin in any way which is prohibited by the laws, regulations or regulatory guidance which apply to you.  You are responsible for remaining aware of any changes to applicable laws, regulations or regulatory guidance;
+5.4.3	defraud us or any of our other users or access any information which belongs to us or any of our other users; or
+5.4.4	use the KnC Directory Server in a way which causes unreasonable demands on our technology or technical infrastructure, or breach or circumnavigate any of our security measures.
+
+6.	BACKING UP 
+6.1	The App gives you the option to backup your Bitcoin wallet seed to external third party providers (“Backup”).  WE STRONGLY RECOMMEND THAT YOU BACKUP YOUR SEED.  If you Backup and your phone or the App is lost or damaged, you will be able to recover your seed from the Backup.
+6.2	Backup may require you to enter additional passwords or undertake additional security measures.
+6.3	Backup is subject to the terms of the third party backup providers and we do not make any warranty, undertaking or representation in respect of such providers.  
+6.4	IT IS UP TO YOU TO TAKE WHATEVER SECURITY MEASURES YOU THINK NECESSARY TO ENSURE THAT YOUR BACKUP IS SECURE.  WE ARE NOT LIABLE FOR ANY IMPROPER USE OF YOUR BACKUP BY YOU OR ANY OTHER PERSON.
+
+7.	OWNERSHIP OF THE KNC DIRECTORY SERVER
+7.1	All intellectual property in the KnC Directory Server, except for User Content (please see clause 9) is owned by us and/or our licensors. 
+7.2	‘KnC’ is a registered trade mark belonging to us. All rights are reserved by us in the trade mark.
+7.3	All intellectual property rights in the Further Features and content on the Further Features (except for User Content), including but not limited to text, software, scripts, code, designs, graphics, photos, sounds, music, videos, applications, interactive features and all other content ("Content") belongs to us and/or our licensors. All of our rights are reserved.
+7.4	You are not sold the KnC Directory Server, the Further Features or any Content, but are granted a personal licence to use the same in accordance with this EULA.
+
+8.	LINKS TO WEBSITES, OTHER APPS AND THIRD PARTY SERVICES
+8.1	Where we make available links to other websites or apps in the App, such links are provided for your information and convenience only. We are not responsible for the content or performance of the linked website or app, and you are responsible for reviewing the linked website’s or app’s terms of use or privacy policy.
+8.2	If you permit any third party to access the App (whether this access is enabled through the App itself or through a third party application), you acknowledge that you remain solely responsible for any actions or omissions enabled by the grant of your permission.
+
+9.	USER CONTENT
+9.1	To the extent that the App allows you to publish any content, data or other information (“User Content”), then you acknowledge that we may copy, store, adapt, modify, and use the User Content to enable us to provide the App and the User Content to you and others (as applicable).  
+9.2	You retain all ownership of your User Content that you upload, and you are free to use it elsewhere.
+9.3	You hereby grant us a non-exclusive, irrevocable and perpetual, royalty free, worldwide, sub-licensable and transferable right to copy, adapt, modify and use the User Content, and you acknowledge that we may make the User Content available to other users of the App.
+9.4	You confirm that any User Content shall be your own original work and you shall not infringe the intellectual property rights or privacy rights of any third party or defame any person. 
+9.5	To the extent that the KnC Directory Server allows you to message or communicate with other users of the KnC Directory Server, then you must take care in the type of information you wish to share. For example, you should only share personal information or your contact details with people you trust.  You must not send any abusive or offensive material. We do not moderate any communications that you may send from the App or which may be sent to you.
+9.6	We will use your User Content in accordance with our privacy policy.
+9.7	After you delete the App, your User Content shall remain on our servers for a limited period of time as part of our backup system.
+
+10.	FURTHER FEATURES
+10.1	We may in the future offer further in-app content or features for you to purchase, download and use in the App (“Further Features”). Further Features may form part of the KnC Directory Server.  If you agree to purchase and/or use Further Features which form part of the KnC Directory Server, we grant you a non-exclusive, personal, revocable, non-transferable license to use the Further Content in the App on the terms of this EULA.
+10.2	Further Features may be made available subject to additional terms, which we will notify to you before you purchase and/or use any Further Features.
+
+11.	SYSTEM REQUIREMENTS
+This App has been developed to work on the latest version of the Google Android software at the time of its release. Google may from time to time update the Android software, and we will endeavour, but not be obligated, to update the App if applicable to ensure that its functionality and performance continues with any updated Android release. It is your obligation to ensure that you are using the latest public release of the Android software. 
+
+12.	INDEMNITY
+12.1	You agree to indemnify us and keep us indemnified from and against all claims, damages, expenses, costs and liabilities (including legal fees) relating to or arising from:
+12.1.1	your use of the KnC Directory Server;
+12.1.2	any actions or omissions of any third party that accesses the KnC Directory Server (whether this access is enabled through the App itself or through a third party application); and 
+12.1.3	any breach or suspected breach of this EULA by you or from your violation of any law or the rights of any third party.
+
+13.	TERM AND TERMINATION
+13.1	This EULA takes effect upon your download and/or use of the App and remains effective until terminated by either of us.  You may terminate this EULA at any time by removing the App from the phone on which it is installed. The EULA shall automatically terminate if you fail to comply with any term or condition of this EULA.  Upon termination you shall cease all use of the App and delete all copies of the App.  YOU SHOULD NOT DELETE THE APP WITHOUT HAVING BACKED-UP YOUR PRIVATE KEYS,
+13.2	The following clauses of the EULA shall survive termination: Clause 7 (Ownership), Clause 12 (Indemnity), Clause 13 (Term and Termination), Clause 14 (Limitation of Liability) and Clause 15 (General Provisions).
+
+14.	OUR LIMITATIONS OF LIABILITY
+14.1	THE APP IS PROVIDED ‘AS IS’ AND ON AN ‘AS AVAILABLE’ BASIS WITHOUT ANY REPRESENTATION, ENDORSEMENT OR WARRANTY OF ANY KIND, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF SATISFACTORY QUALITY, FITNESS FOR PURPOSE, NON-INFRINGEMENT, COMPATIBILITY, SECURITY AND/OR ACCURACY. 
+14.2	WE DO NOT GUARANTEE THAT (I) THE APP WILL BE FREE OF ERRORS, VIRUSES, BUGS OR OTHER DEFECTS; OR (II) THAT THE APP OR ANY INFORMATION DISPLAYED OR DISTRIBUTED THROUGH THE APP OR IN THE DOCUMENTATION WILL BE ACCURATE OR COMPLETE; OR (III) THAT ANY DEFECTS IN THE APP WILL BE CORRECTED. 
+14.3	YOU ACKNOWLEDGE THAT RELIANCE ON ANY SUCH INFORMATION SHALL BE AT YOUR SOLE RISK.  YOU ACKNOWLEDGE THAT THE APP HAS NOT BEEN DEVELOPED TO MEET YOUR INDIVIDUAL REQUIREMENTS AND THAT IT IS THEREFORE YOUR RESPONSIBILITY TO ENSURE THAT THE FACILITIES AND FUNCTIONS OF THE APP MEET YOUR REQUIREMENTS.
+14.4	TO THE FULLEST EXTENT PERMISSABLE BY LAW, INCLUDING IN YOUR LOCAL JURISDICTION, WE EXCLUDE ALL LIABILITY FOR ANY LOSS OR DAMAGE, WHETHER SUFFERED DIRECTLY OR INDIRECTLY,  IMMEDIATELY OR CONSEQUENTIALLY AND WHETHER ARISING  IN CONTRACT, TORT (INCLUDING NEGLIGENCE) OR OTHERWISE, INCLUDING ANY
+14.4.1	SPECIAL DAMAGE EVEN IF THE SUPPLIER WAS AWARE OF THE CIRCUMSTANCES IN WHICH SUCH SPECIAL DAMAGE COULD ARISE;
+14.4.2	LOSS OF PROFITS;
+14.4.3	LOSS OF ANTICIPATED SAVINGS;
+14.4.4	LOSS OF BUSINESS OPPORTUNITY;
+14.4.5	LOSS OF GOODWILL;
+14.4.6	LOSS OR CORRUPTION OF DATA,
+14.4.7	LOSS ARISING OUT OF OR IN CONNECTION WITH ANY OF THE RISKS SET OUT IN CLAUSE 3.
+14.5	WE ARE NOT RESPONSIBLE FOR ANY LOSS OR DAMAGE CAUSED BY OR AS A RESULT OF THE DEVICE ON WHICH THE APP IS RUN OR BY ANY PRODUCTS OR SERVICES PAID FOR WITH THE SERVICES OF THE APP OR THE ACT OR OMISSIONS OF ANY SELLER OF ANY PRODUCTS OR SERVICES PAID FOR WITH THE SERVICES OF THE APP.
+14.6	OUR LIABILITY TO YOU, TO THE EXTENT WE CANNOT EXCLUDE IT ENTIRELY, SHALL, WHERE PERMISSABLE BY LAW, BE LIMITED TO [£10].
+14.7	NOTHING IN THIS EULA SHALL EXCLUDE OR LIMIT OUR LIABILITY FOR FRAUDULENT MISREPRESENTATIONS OR FOR DEATH OR PERSONAL INJURY RESULTING FROM OUR NEGLIGENCE OR THE NEGLIGENCE BY US, OR ANY LIABILITY NOT CAPABLE OF LIMITATION BY APPLICABLE LAW. 
+
+15.	TERMS REQUIRED BY APPLE
+15.1	The following terms of this section are the terms which we are required by Apple Inc to notify you of and obtain your consent of in respect of using the App on the iOS platform:
+15.2	Acknowledgement: You and we acknowledge that these terms of use constitute an agreement which is concluded between you and us only, and not with Apple Inc, nor any subsidiary or affiliate company of Apple Inc, (“Apple”). You also acknowledge that we are solely responsible for the App and the content thereof.
+15.3	Grant of Licence:  Subject to, and in consideration of, your compliance with all conditions of  these terms of use we grant you a non-exclusive, personal, revocable, non-transferable license to use the App and content on the App for your lifetime on an iOS product which you own or control, and as permitted by the Usage Rules set forth in the App Store Terms of Service (http://www.apple.com/uk/legal/terms/), and in accordance with the Privacy Policy.
+15.4	Maintenance and support: We are solely responsible for providing support and maintenance for the App. You and we acknowledge that Apple has no obligation whatsoever to furnish any maintenance and support services with respect to the App.
+15.5	Product claims: You acknowledge that we, and not Apple, are responsible for addressing any claims you may have relating to the App or your possession and/or use of the App, including but not limited to: (i) product liability claims; (ii) any claim that the App fails to conform to any applicable legal or regulatory requirement; and (iii) claims arising under consumer protection or similar legislation. 
+15.6	Intellectual Property Rights: You acknowledge that in the event of a third party claim that the App or your possession and use of the App infringes that third party’s intellectual property rights, then we shall be solely responsible for the investigation, defence, settlement and discharge of any such intellectual property right infringement claim, and not Apple.
+15.7	Legal Compliance: You represent and warrant that (i) you are not located in a country that is subject to a US Government embargo, or that has been designated by the US Government as a “terrorist supporting” country; and (ii) you are not listed on any US Government list of prohibited or restricted parties.
+15.8	Third Party Beneficiary: You acknowledge and agree that Apple, and Apple’s subsidiaries, are third party beneficiaries of these terms of use, and that when you accept the terms and conditions of these terms of use, Apple will have the right (and will be deemed to have accepted the right) to enforce these terms of use against you as a third party beneficiary thereof.
+15.9	Third Party Terms of Agreement: We may use third party software and services provided by others which may be subject to separate terms. Use of the App is therefore subject to your acceptance and compliance of these third party terms and you agree to comply with the applicable third party terms and conditions when using the App. 
+
+16.	GENERAL PROVISIONS
+16.1	This EULA sets out the complete understanding and agreement between us and you.  No waiver by us of any failure by you to comply with or perform a provision of EULA shall be deemed to be a waiver of any preceding or succeeding failure. In the event that any of the provisions of this EULA are held to be invalid or unenforceable, the remaining provisions will remain in full force and effect.
+16.2	This EULA is personal to you.  You may not assign, sub-licence, transfer or dispose of the rights licensed under this agreement.
+16.3	We may change this EULA for any reason.  We will notify you of any changes and you will be required to accept the changes to continue to use the KnC Directory Server.
+16.4	If any provision of this EULA is found by a court or regulator to be invalid or unenforceable the other provisions shall continue to apply.  
+16.5	Subject to your local consumer laws, and in the event of any dispute between you and us, and regarding this EULA and/or your use of the KnC Directory Server, then the laws of England and Wales will apply. You agree that in the event we are unable to settle any dispute with you, then any court or arbitration proceedings shall be held in England, UK only.
+
+Date of Last Revision: 20th August 2014
+
