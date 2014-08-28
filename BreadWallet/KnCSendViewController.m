@@ -21,12 +21,23 @@
 #import "KnCViewController+UIViewController.h"
 #import "KnCTxDataUtil.h"
 #import "KnCColor+UIColor.h"
+#import "KnCOneName.h"
+#import "KnCOneNameViewController.h"
+#import "SDWebImageManager.h"
 
 #define ALERT_CONFIRM_FEE 2
 #define ALERT_CONTACT_NEW_ADDRESS 3
 #define ALERT_REQUEST_NEW_CONTACT 4
 
 #define AMOUNT_PLACEHOLDER @"0.00"
+
+typedef enum
+{
+    DEFAULT,
+    SYNCING,
+    FAILED,
+} SEND_STATE;
+
 
 @interface KnCSendViewController ()
 
@@ -38,6 +49,10 @@
 @property (nonatomic, strong) KnCAutocompleteTableViewController *autocompleteView;
 
 @property (nonatomic) BOOL displayBalanceInLocalCurrency;
+
+@property (nonatomic, strong) KnCOneNameViewController *oneNameView;
+
+@property (nonatomic) SEND_STATE sendState;
 
 @end
 
@@ -86,6 +101,7 @@
     self.autocompleteView.delegate = self;
     self.autocompleteView.view.layer.borderWidth = 1;
     self.autocompleteView.view.layer.borderColor = [UIColor grayColor].CGColor;
+    [self.autocompleteView.view setAutoresizingMask:UIViewAutoresizingNone];
     [self setAutocompleteBoxHidden:YES];
     [self.scrollView addSubview:self.autocompleteView.view];
     
@@ -117,19 +133,42 @@
     [self.sendInfoLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:14.0f]];
     [self.sendInfoLabel setTextColor:[UIColor disabledGray]];
     
+    self.oneNameView = [[KnCOneNameViewController alloc]init];
+    [self setOneNameBoxHidden:YES];
+    self.oneNameView.view.layer.borderWidth = self.autocompleteView.view.layer.borderWidth;
+    self.oneNameView.view.layer.borderColor = self.autocompleteView.view.layer.borderColor;
+    [self.scrollView addSubview:self.oneNameView.view];
+    
+    self.sendState = DEFAULT;
 }
 
 -(void)setAutocompleteBoxHidden:(BOOL)hidden
 {
+    [self fadeToggle:self.autocompleteView.view hidden:hidden];
+}
 
-    CGFloat toAlpha = hidden ? 0.0 : 1.0;
-    
-    if(self.autocompleteView.view.alpha != toAlpha){
-        
-        [UIView animateWithDuration:0.25 animations:^{
-            self.autocompleteView.view.alpha = toAlpha;
-        }];
-    }
+-(void)syncWasStarted
+{
+    self.sendState = SYNCING;
+    [self validateInput];
+}
+
+-(void)syncWasFinished
+{
+    self.sendState = DEFAULT;
+    [self validateInput];
+}
+
+-(void)syncFailed
+{
+    self.sendState = FAILED;
+    [self validateInput];
+}
+
+
+-(void)setOneNameBoxHidden:(BOOL)hidden
+{
+    [self fadeToggle:self.oneNameView.view hidden:hidden];
 }
 
 -(IBAction)toggleBalance:(id)sender
@@ -159,7 +198,16 @@
 
 -(void)updateBalance
 {
-    uint64_t balance = [[[BRWalletManager sharedInstance]wallet]spendableBalance];
+    BRWallet *wallet = [[BRWalletManager sharedInstance]wallet];
+    
+    uint64_t totalBalance = [wallet balance];
+    uint64_t balance = [wallet spendableBalance];
+    
+    if(totalBalance - balance != 0){
+        [self.balanceInfoLabel setText:[String key:@"SEND_SPENDABLE_BALANCE"]];
+    }else{
+        [self.balanceInfoLabel setText:@""];
+    }
     
     [self.balanceLabel setBalance:balance useLocalCurrency:NO];
     [self.localBalanceLabel setBalance:balance useLocalCurrency:YES];
@@ -175,11 +223,123 @@
     [self setScrollViewFrame:NO withSender:notification];
 }
 
+-(void)didSelectOneNameUser:(NSString*)username json:(NSDictionary*)response
+{
+    [self setOneNameBoxHidden:YES];
+
+    NSString *name = [[response objectForKey:@"name"]objectForKey:@"formatted"];
+    
+    if(!name){
+        name = username;
+    }
+    
+    NSString *address = [[response objectForKey:@"bitcoin"]objectForKey:@"address"];
+
+    AddressBookContact *contact = [[AddressBookContact alloc]init];
+    contact.address = address;
+    contact.name = [NSString stringWithFormat:@"+%@",name];
+    
+    [self didPickAddressBookContact:contact];
+    
+    KnCContact *knownContact = [AddressBookProvider contactByAddress:address];
+    
+    if(!knownContact){
+        NSString *title = [NSString stringWithFormat:[String key:@"SAVE_CONTACT_TITLE_PATTERN"],name];
+        KnCAlertView *alertView = [[KnCAlertView alloc]initWithTitle:title message:address delegate:self cancelButtonTitle:[String key:@"NO"] otherButtonTitles:[String key:@"YES"], nil];
+        alertView.block = ^{
+            
+            KnCContact *contact = [AddressBookProvider saveOneNameContact:name address:address username:username];
+            
+            if(contact){
+                [self didPickAddressBookContact:[contact createAddressBookContactObject]];
+                
+                NSString *imageUrl = [[response objectForKey:@"avatar"]objectForKey:@"url"];
+                if(imageUrl){
+                    
+                    __strong NSString *blockAddress = [NSString stringWithString:address];
+                    
+                    [[SDWebImageManager sharedManager]downloadImageWithURL:[NSURL URLWithString:imageUrl] options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                        
+                    } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                        if(image){
+                            KnCContact *savedContact = [AddressBookProvider contactByAddress:blockAddress];
+                            if(savedContact){
+                                [AddressBookProvider setImage:image toContact:savedContact];
+                            }
+                        }
+                    }];
+                }
+            }
+            
+        };
+        [alertView show];
+    }else{
+        [self didPickAddressBookContact:[knownContact createAddressBookContactObject]];
+    }
+    
+}
+
 -(void)addressFieldDidChange:(id)sender
 {
     BOOL show = NO;
-    
-    if(self.addressField.text.length > 1){
+    BOOL showOneName = NO;
+
+    if([self.addressField.text rangeOfString:@"+"].location == 0){
+        
+        self.oneNameView.view.frame = CGRectMake(20, 142, 280, 44);
+        
+        NSString *username = [self.addressField.text stringByReplacingOccurrencesOfString:@"+" withString:@""];
+        if(username.length > 0){
+            
+            showOneName = YES;
+            
+            [self.oneNameView setSearchingFor:username];
+            self.oneNameView.didSelectCallback = nil;
+            
+            
+            [KnCOneName lookupUsername:username completionCallback:^(NSString *responseUsername, NSDictionary *response) {
+                
+                NSString *inputUsername = [self.addressField.text stringByReplacingOccurrencesOfString:@"+" withString:@""];
+                
+                if([inputUsername isEqualToString:responseUsername]){
+                
+                    NSString *name = [[response objectForKey:@"name"]objectForKey:@"formatted"];
+                    
+                    if(!name){
+                        name = responseUsername;
+                    }
+                    
+                    NSString *address = [[response objectForKey:@"bitcoin"]objectForKey:@"address"];
+                    
+                    if(!address){
+                        self.oneNameView.didSelectCallback = nil;
+                        [self.oneNameView setNoUserFound:username];
+                    }else{
+                    
+                        NSString *imageUrl = [[response objectForKey:@"avatar"]objectForKey:@"url"];
+                        
+                        [self.oneNameView setResult:name address:address imageUrl:imageUrl];
+
+                        __weak id weakSelf = self;                    
+                        [self.oneNameView setDidSelectCallback:^{
+                            [weakSelf didSelectOneNameUser:responseUsername json:response];
+                        }];
+                    
+                    }
+                }
+            } errorCallback:^(NSString *responseUsername, NSError *error) {
+                self.oneNameView.didSelectCallback = nil;                
+                NSString *inputUsername = [self.addressField.text stringByReplacingOccurrencesOfString:@"+" withString:@""];
+                if([inputUsername isEqualToString:responseUsername]){
+                    [self.oneNameView setNoUserFound:username];
+                }
+            }];
+        }else if(self.addressField.text.length == 1){
+            showOneName = YES;
+            [self.oneNameView setOneNameHint];
+        }
+        
+    }else if(self.addressField.text.length > 1){
         
         NSMutableArray *items = [NSMutableArray array];
         
@@ -219,9 +379,11 @@
     }
     
     [self setAutocompleteBoxHidden:!show];
-    
+    [self setOneNameBoxHidden:!showOneName];
     [self validateInput];
 }
+
+
 
 -(void)didSelectItem:(id)item
 {
@@ -248,7 +410,25 @@
         [self showExchangeRates];
     }else if(sender == self.btcButton){
         [self showDenominations];
+    }else if(sender == self.labelButton){
+        [self informLabel];
     }
+}
+
+-(void)informLabel
+{
+    NSString *title = @"";
+    NSString *message = @"";
+    
+    if([self.labelField.placeholder isEqualToString:[String key:@"MESSAGE"]]){
+        title = [String key:@"SEND_INFO_MESSAGE_TITLE"];
+        message = [String key:@"SEND_INFO_MESSAGE_MESSAGE"];
+    }else{
+        title = [String key:@"SEND_INFO_NOTE_TITLE"];
+        message = [String key:@"SEND_INFO_NOTE_MESSAGE"];
+    }
+    
+    [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:[String key:@"OK"] otherButtonTitles:nil]show];
 }
 
 -(void)showDenominations
@@ -297,7 +477,7 @@
 -(void)setupLabelFieldInput
 {
     NSString *image = @"message";
-    if([KnCDirectory isRegistred]){
+    if([KnCDirectory isRegistred] && ((!self.selectedContact || (self.selectedContact && [self.selectedContact.source isEqualToString:SOURCE_DIRECTORY])))){
         self.labelField.placeholder = [String key:@"MESSAGE"];
     }else{
         self.labelField.placeholder = [String key:@"LABEL"];
@@ -331,6 +511,8 @@
     [self.addressField setHidden:NO];
     
     [self validateInput];
+    
+    [self setupLabelFieldInput];
 }
 
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
@@ -364,6 +546,8 @@
     [self.nameField setHidden:NO];
     
     [self validateInput];
+    
+    [self setupLabelFieldInput];
 }
 
 -(void)send
@@ -479,9 +663,9 @@
         CGRect keyboardFrame = [self.view convertRect:rawFrame fromView:nil];
         
         frame.size.height = self.view.frame.size.height - keyboardFrame.size.height + self.parent.navigationController.navigationBar.frame.size.height + 5;
-        
+        __weak KnCSendViewController *weakSelf = self;
         [UIView animateWithDuration:0.4 animations:^{
-            self.scrollView.frame = frame;
+            weakSelf.scrollView.frame = frame;
         }];
         
     }else{
@@ -600,8 +784,13 @@
     
     BOOL isEmptyWalletRequest = [self isEmptyWalletRequest];
     
+    BOOL validAddress = [self.addressField.text isValidBitcoinAddress];
     
-    if([self.addressField.text isValidBitcoinAddress] && ([self validateAmount] || isEmptyWalletRequest)){
+    if(self.addressField.text.length > 20 && !validAddress){
+        self.sendInfoLabel.text = [String key:@"SEND_INVALID_ADDRESS"];
+    }
+    
+    if(validAddress && ([self validateAmount] || isEmptyWalletRequest)){
         self.sendInfoLabel.text = @"";
         valid = YES;
     }
@@ -615,6 +804,23 @@
     }
 
     [self.sendButton setEnabled:valid];
+    
+    
+    if(self.sendState != DEFAULT){
+        
+        if(self.sendState == SYNCING){
+            [self.sendButton setTitle:[String key:@"SEND_WAIT_FOR_SYNC"] forState:UIControlStateNormal];
+            [self.sendButton setTitle:[String key:@"SEND_WAIT_FOR_SYNC"] forState:UIControlStateDisabled];
+            self.sendInfoLabel.text = [String key:@"SEND_WAIT_FOR_SYNC_SUBTITLE"];
+        }else if(self.sendState == FAILED){
+            [self.sendButton setTitle:[String key:@"SEND_SYNC_FAILED"] forState:UIControlStateNormal];
+            [self.sendButton setTitle:[String key:@"SEND_SYNC_FAILED"] forState:UIControlStateDisabled];
+            self.sendInfoLabel.text = [String key:@"SEND_SYNC_FAILED_SUBTITLE"];
+        }
+        
+        [self.sendButton setEnabled:NO];
+        return;
+    }
 }
 
 -(BOOL)validateAmount
@@ -728,13 +934,55 @@
             if(ok){
                 [self doSendTx:tx];
             }else if(hasNewAddress){
-                [self contactHasNewAddress:savedPhoneNumber oldAddress:savedAddress newAddress:newAddress];
+                [self contactHasNewAddress:newAddress oldAddress:savedAddress];
             }else{
                 [self errorVerifyingContactsAddress:tx];
             }
             
             
         } errorCallback:^(NSError *error) {
+            [SVProgressHUD dismiss];
+            [self errorVerifyingContactsAddress:tx];
+        }];
+        
+    }else if(contact && contact.source && [contact oneNameUsername]){
+        
+        NSString *username = [contact oneNameUsername];
+        NSString *savedAddress = [NSString stringWithString:self.addressField.text];
+        
+        [SVProgressHUD showWithStatus:[String key:@"VERIFYING_ADDRESS"] maskType:SVProgressHUDMaskTypeGradient];
+        
+        [KnCOneName lookupUsernameNotUsingCache:username completionCallback:^(NSString *username, NSDictionary *response) {
+            
+            [SVProgressHUD dismiss];
+            
+            BOOL ok = NO;
+            BOOL hasNewAddress = NO;
+            NSString *newAddress = nil;
+            
+            if(response && [response objectForKey:@"bitcoin"]){
+            
+                NSString *address = [[response objectForKey:@"bitcoin"]objectForKey:@"address"];
+                
+                if(address && [address isEqualToString:savedAddress]){
+                    ok = YES;
+                }else if(address){
+                    hasNewAddress = YES;
+                    newAddress = [NSString stringWithString:address];
+                }
+            
+            }
+            
+            if(ok){
+                [self doSendTx:tx];
+            }else if(hasNewAddress){
+                [self contactHasNewAddress:newAddress oldAddress:savedAddress];
+            }else{
+                [self errorVerifyingContactsAddress:tx];
+            }
+            
+            
+        } errorCallback:^(NSString *username, NSError *error) {
             [SVProgressHUD dismiss];
             [self errorVerifyingContactsAddress:tx];
         }];
@@ -820,7 +1068,7 @@
     [self validateInput];
 }
 
--(void)contactHasNewAddress:(NSString*)phone oldAddress:(NSString*)oldAddress newAddress:(NSString*)newAddress
+-(void)contactHasNewAddress:(NSString*)newAddress oldAddress:(NSString*)oldAddress
 {
     KnCContact *contact = [AddressBookProvider contactByAddress:oldAddress];
     NSString *title = [NSString stringWithFormat:[String key:@"SEND_CONTACT_HAS_NEW_ADDRESS_PATTERN"],contact.label];
@@ -866,7 +1114,8 @@
             
             if(self.labelField.text.length > 0)
             {
-                if([KnCDirectory isRegistred]){
+                
+                if([self.labelField.placeholder isEqualToString:[String key:@"MESSAGE"]]){
                     [KnCTxDataUtil saveMessage:self.labelField.text toTx:tx.txIdAsString];
                 }else{
                     [KnCTxDataUtil saveLabel:self.labelField.text toTx:tx.txIdAsString];

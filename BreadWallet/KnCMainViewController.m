@@ -9,7 +9,6 @@
 #import "BRWalletManager.h"
 #import "BRPeerManager.h"
 
-#import "UIViewController+KnC.h"
 #import "KnCWelcomeViewController.h"
 
 #import "SVProgressHUD.h"
@@ -289,18 +288,22 @@
 {
     
     [[BRPeerManager sharedInstance] connect];
+
+    if(!self.reachability){
+        self.reachabilityObserver =
+        [[NSNotificationCenter defaultCenter] addObserverForName:kReachabilityChangedNotification object:nil queue:nil
+                                                      usingBlock:^(NSNotification *note) {
+                                                          if (self.reachability.currentReachabilityStatus != NotReachable) {
+                                                              [[BRPeerManager sharedInstance] connect];
+                                                          }
+                                                          else if (self.reachability.currentReachabilityStatus == NotReachable) [self addSyncWarning];
+                                                      }];
+    }
     
-    self.reachabilityObserver =
-    [[NSNotificationCenter defaultCenter] addObserverForName:kReachabilityChangedNotification object:nil queue:nil
-                                                  usingBlock:^(NSNotification *note) {
-                                                      if (self.reachability.currentReachabilityStatus != NotReachable) {
-                                                          [[BRPeerManager sharedInstance] connect];
-                                                      }
-                                                      else if (self.reachability.currentReachabilityStatus == NotReachable) [self addSyncWarning];
-                                                  }];
-    
-    self.reachability = [Reachability reachabilityForInternetConnection];
-    [self.reachability startNotifier];
+    if(!self.reachability){
+        self.reachability = [Reachability reachabilityForInternetConnection];
+        [self.reachability startNotifier];
+    }
     
     self.balanceObserver =
     [[NSNotificationCenter defaultCenter] addObserverForName:BRWalletBalanceChangedNotification object:nil queue:nil
@@ -310,31 +313,29 @@
                                                       [self balanceWasUpdated];
                                                       [self updateAddressDirectoryEntry];
                                                   }];
+    if(!self.syncStartedObserver){
+        self.syncStartedObserver =
+        [[NSNotificationCenter defaultCenter] addObserverForName:BRPeerManagerSyncStartedNotification object:nil
+                                                           queue:nil usingBlock:^(NSNotification *note) {
+                                                               [self syncWasStarted];
+                                                           }];
+    }
     
-    self.syncStartedObserver =
-    [[NSNotificationCenter defaultCenter] addObserverForName:BRPeerManagerSyncStartedNotification object:nil
-                                                       queue:nil usingBlock:^(NSNotification *note) {
-                                                           [self addNavigationBarActivityIndicator];
-                                                           self.oldBalance = 0;
-                                                       }];
+    if(!self.syncFinishedObserver){
+        self.syncFinishedObserver =
+        [[NSNotificationCenter defaultCenter] addObserverForName:BRPeerManagerSyncFinishedNotification object:nil
+                                                           queue:nil usingBlock:^(NSNotification *note) {
+                                                               [self syncWasFinished];
+                                                           }];
+    }
     
-    self.syncFinishedObserver =
-    [[NSNotificationCenter defaultCenter] addObserverForName:BRPeerManagerSyncFinishedNotification object:nil
-                                                       queue:nil usingBlock:^(NSNotification *note) {
-                                                            [self balanceWasUpdated];
-                                                            [self removeNavigationBarActivityIndicator];
-                                                            [self removeSyncWarning];
-                                                       }];
-    
+    if(!self.syncFailedObserver){
     self.syncFailedObserver =
-    [[NSNotificationCenter defaultCenter] addObserverForName:BRPeerManagerSyncFailedNotification object:nil
-                                                       queue:nil usingBlock:^(NSNotification *note) {
-                                                            [self balanceWasUpdated];
-                                                            [self removeNavigationBarActivityIndicator];
-                                                            [self addSyncWarning];
-                                                           
-                                                           
-                                                       }];
+        [[NSNotificationCenter defaultCenter] addObserverForName:BRPeerManagerSyncFailedNotification object:nil
+                                                           queue:nil usingBlock:^(NSNotification *note) {
+                                                               [self syncFailed];
+                                                           }];
+    }
     
     
 }
@@ -371,13 +372,36 @@
 -(void)removeNavigationBarActivityIndicator
 {
     [self removeViewFromNavigationBar:TAG_NAV_ACTIVITY];
+    [self setKnCLogoHidden:NO];
 }
 -(void)addNavigationBarActivityIndicator
 {
     [self removeNavigationBarActivityIndicator];
+    
+    [self setKnCLogoHidden:YES];
+    
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 40)];
+    view.tag = TAG_NAV_ACTIVITY;
+    [view setUserInteractionEnabled:NO];
     KnCProgressView *progressView = [[KnCProgressView alloc]initWithFrame:CGRectMake(0, 0, 320, 3)];
-    progressView.tag = TAG_NAV_ACTIVITY;
-    [self.navigationController.navigationBar addSubview:progressView];
+    [view addSubview:progressView];
+    
+    UILabel *info = [[UILabel alloc]initWithFrame:CGRectMake(60, 7, 200, 20)];
+    [info setText:[String key:@"TOP_SYNC_IN_PROGRESS"]];
+    [info setFont:[UIFont fontWithName:@"HelveticaNeue" size:14.0f]];
+    [info setTextAlignment:NSTextAlignmentCenter];
+    [info setUserInteractionEnabled:NO];
+    [view addSubview:info];
+    
+    UILabel *sub = [[UILabel alloc] initWithFrame:CGRectMake(60, 22, 200, 15)];
+    [sub setText:[String key:@"TOP_SYNC_IN_PROGRESS_SUBTITLE"]];
+    [sub setFont:[UIFont fontWithName:@"HelveticaNeue" size:10.0f]];
+    [sub setTextAlignment:NSTextAlignmentCenter];
+    [sub setUserInteractionEnabled:NO];
+    [view addSubview:sub];
+    
+    
+    [self.navigationController.navigationBar addSubview:view];
 }
 
 
@@ -457,6 +481,50 @@
         
         if([vc respondsToSelector:@selector(updateBalance)]){
             [vc performSelector:@selector(updateBalance)];
+        }
+        
+    }
+}
+
+-(void)syncWasStarted
+{
+    [self addNavigationBarActivityIndicator];
+    self.oldBalance = 0;
+    
+    for(UIViewController *vc in self.pages){
+        
+        if([vc respondsToSelector:@selector(syncWasStarted)]){
+            [vc performSelector:@selector(syncWasStarted)];
+        }
+        
+    }
+}
+
+-(void)syncWasFinished
+{
+    [self balanceWasUpdated];
+    [self removeNavigationBarActivityIndicator];
+    [self removeSyncWarning];
+    
+    for(UIViewController *vc in self.pages){
+        
+        if([vc respondsToSelector:@selector(syncWasFinished)]){
+            [vc performSelector:@selector(syncWasFinished)];
+        }
+        
+    }
+}
+
+-(void)syncFailed
+{
+    [self balanceWasUpdated];
+    [self removeNavigationBarActivityIndicator];
+    [self addSyncWarning];
+    
+    for(UIViewController *vc in self.pages){
+        
+        if([vc respondsToSelector:@selector(syncFailed)]){
+            [vc performSelector:@selector(syncFailed)];
         }
         
     }
@@ -548,16 +616,28 @@
     
     if(self.firstLoad){
         self.firstLoad = NO;
-        
         [self registerObservers];
-        
-        [AddressBookProvider lookupContacts];
     }
+}
+
+-(void)rebuildView
+{
+    self.pages = nil;
+    [self setupPages];
+    [self displayPage:[self currentTabIndex]];
 }
 
 -(void)setupPages
 {
     if(!self.pages){
+
+        for(UIView *sub in self.scrollView.subviews){
+            [sub removeFromSuperview];
+        }
+        
+        [self.pages removeAllObjects];
+        self.pages = nil;
+        
         self.pages = [NSMutableArray array];
         [self.pages addObject:[[KnCSendViewController alloc]initWithParent:self]];
         [self.pages addObject:[[KnCHomeTableViewController alloc]initWithParent:self]];
@@ -617,9 +697,12 @@
 
 -(void)notifyPageDidAppear:(BOOL)animated
 {
-    NSInteger index = [self.tabBar.items indexOfObject:self.tabBar.selectedItem];
-    UIViewController *current = [self.pages objectAtIndex:index];
-    [current viewDidAppear:animated];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSInteger index = [self.tabBar.items indexOfObject:self.tabBar.selectedItem];
+        UIViewController *current = [self.pages objectAtIndex:index];
+        [current viewDidAppear:animated];
+    });
+   
 }
 
 -(void)labelWasUpdated
@@ -643,6 +726,14 @@
     [self notifyPageDidAppear:YES];
 }
 
+-(int)currentTabIndex
+{
+    int offset = self.scrollView.contentOffset.x;
+    
+    CGFloat diff = offset / self.scrollView.frame.size.width;
+    return (int)diff;
+}
+
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item;
 {
     [self displayPage:(int)item.tag];
@@ -661,6 +752,7 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+    
     // Dispose of any resources that can be recreated.
 }
 

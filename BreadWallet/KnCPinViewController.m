@@ -115,12 +115,12 @@ static CGFloat animationDuration = 0.25;
         
         for(UIView *view in self.digitsSuperView.subviews){
             if(view != self.titleLabel){
-                [self applyCircleLayerWithInnerLayer:view withBorderColor:[UIColor kncGray] andInnerColor:[UIColor whiteColor] animated:NO];
+                [self applyCircleLayerWithInnerLayer:view withBorderColor:[UIColor pinGray] andInnerColor:[UIColor whiteColor] animated:NO];
             }
         }
-        
+        __weak KnCPinViewController* weakSelf = self;
         [UIView animateWithDuration:0.25 animations:^{
-            for(UIView *view in self.view.subviews){
+            for(UIView *view in weakSelf.view.subviews){
                 view.alpha = 1;
             }
         }];
@@ -132,7 +132,7 @@ static CGFloat animationDuration = 0.25;
 
 -(void)makeCircleButton:(UIButton*)button usingLetters:(NSArray*)letters
 {
-    [self makeCircleButton:button letters:letters border:[UIColor kncGray] inner:[UIColor whiteColor] fontColor:[UIColor teal] letterColor:[UIColor darkGrayColor] animated:YES];
+    [self makeCircleButton:button letters:letters border:[UIColor pinGray] inner:[UIColor whiteColor] fontColor:[UIColor teal] letterColor:[UIColor darkGrayColor] animated:YES];
 }
 -(void)makeCircleButton:(UIButton*)button letters:(NSArray*)letters border:(UIColor*)borderColor inner:(UIColor*)innerColor fontColor:(UIColor*)fontColor letterColor:(UIColor*)letterColor animated:(BOOL)animated
 {
@@ -185,9 +185,10 @@ static CGFloat animationDuration = 0.25;
     }
 
     if(animated){
+        __weak KnCPinViewController* weakSelf = self;
         [UIView animateWithDuration:0.25 animations:^{
-            [self applyCircleLayer:view withColor:borderColor];
-            [self applyCircleLayer:inner withColor:innerColor];
+            [weakSelf applyCircleLayer:view withColor:borderColor];
+            [weakSelf applyCircleLayer:inner withColor:innerColor];
         }];
     }else{
         [self applyCircleLayer:view withColor:borderColor];
@@ -208,6 +209,8 @@ static CGFloat animationDuration = 0.25;
     maskLayer.position = CGPointMake(view.bounds.size.width/2, view.bounds.size.height/2);
     
     [view.layer setMask:maskLayer];
+    
+    CGPathRelease(maskPath);
 }
 
 -(void)restartSetPin
@@ -216,26 +219,28 @@ static CGFloat animationDuration = 0.25;
     [self.input setString:@""];
     
     
+    __weak KnCPinViewController* weakSelf = self;
+    
     [self shake:self.digitsSuperView count:3 doneCallback:^{
         
         [UIView animateWithDuration:animationDuration animations:^{
             
-            self.digitsSuperView.center = CGPointMake(self.digitsSuperView.frame.size.width*2, self.digitsSuperView.center.y);
+            weakSelf.digitsSuperView.center = CGPointMake(self.digitsSuperView.frame.size.width*2, self.digitsSuperView.center.y);
             
         } completion:^(BOOL finished) {
             
-            self.digitsSuperView.center = CGPointMake(-self.digitsSuperView.frame.size.width, self.digitsSuperView.center.y);
-            [self refreshIndicators];
-            self.pinMode = PIN_SET;
-            [self updateTitleLabel];
+            weakSelf.digitsSuperView.center = CGPointMake(-weakSelf.digitsSuperView.frame.size.width, weakSelf.digitsSuperView.center.y);
+            [weakSelf refreshIndicators];
+            weakSelf.pinMode = PIN_SET;
+            [weakSelf updateTitleLabel];
             
             [UIView animateWithDuration:animationDuration animations:^{
                 
-                self.digitsSuperView.center = CGPointMake(self.view.center.x, self.digitsSuperView.center.y);
+                weakSelf.digitsSuperView.center = CGPointMake(self.view.center.x, self.digitsSuperView.center.y);
                 
             } completion:^(BOOL finished) {
                 
-                self.userInteractionEnabled = YES;
+                weakSelf.userInteractionEnabled = YES;
                 
             }];
             
@@ -351,21 +356,23 @@ static CGFloat animationDuration = 0.25;
 }
 -(void)proceedToMode:(PIN_MODE)pinMode
 {
+    
+    __weak KnCPinViewController* weakSelf = self;
     self.userInteractionEnabled = NO;
     [UIView animateWithDuration:animationDuration animations:^{
-        self.digitsSuperView.center = CGPointMake(-self.digitsSuperView.frame.size.width*2, self.digitsSuperView.center.y);
+        weakSelf.digitsSuperView.center = CGPointMake(-weakSelf.digitsSuperView.frame.size.width*2, weakSelf.digitsSuperView.center.y);
     } completion:^(BOOL finished) {
         
-        self.digitsSuperView.center = CGPointMake(self.digitsSuperView.frame.size.width*2, self.digitsSuperView.center.y);
-        self.pinMode = pinMode;
-        [self.input setString:@""];
-        [self refreshIndicators];
-        [self updateTitleLabel];
+        weakSelf.digitsSuperView.center = CGPointMake(self.digitsSuperView.frame.size.width*2, weakSelf.digitsSuperView.center.y);
+        weakSelf.pinMode = pinMode;
+        [weakSelf.input setString:@""];
+        [weakSelf refreshIndicators];
+        [weakSelf updateTitleLabel];
         
         [UIView animateWithDuration:animationDuration animations:^{
-            self.digitsSuperView.center = CGPointMake(self.view.center.x, self.digitsSuperView.center.y);
+            weakSelf.digitsSuperView.center = CGPointMake(weakSelf.view.center.x, weakSelf.digitsSuperView.center.y);
         } completion:^(BOOL finished) {
-            self.userInteractionEnabled = YES;
+            weakSelf.userInteractionEnabled = YES;
         }];
         
     }];
@@ -453,9 +460,9 @@ static CGFloat animationDuration = 0.25;
 -(void)setIndicator:(UIView*)indicator active:(BOOL)active
 {
     if(active){
-         [self applyCircleLayerWithInnerLayer:indicator withBorderColor:[UIColor teal] andInnerColor:[UIColor whiteColor] animated:NO];
+         [self applyCircleLayerWithInnerLayer:indicator withBorderColor:[UIColor teal] andInnerColor:[UIColor teal] animated:NO];
     }else{
-        [self applyCircleLayerWithInnerLayer:indicator withBorderColor:[UIColor kncGray] andInnerColor:[UIColor whiteColor] animated:NO];
+        [self applyCircleLayerWithInnerLayer:indicator withBorderColor:[UIColor pinGray] andInnerColor:[UIColor whiteColor] animated:NO];
 
     }
 }
@@ -484,7 +491,7 @@ static CGFloat animationDuration = 0.25;
 -(IBAction)pinButtonDown:(UIButton *)sender
 {
     if(self.userInteractionEnabled){
-        [self makeCircleButton:sender letters:nil border:[UIColor kncGray] inner:[UIColor kncGray] fontColor:[UIColor whiteColor] letterColor:[UIColor whiteColor] animated:NO];
+        [self makeCircleButton:sender letters:nil border:[UIColor pinGray] inner:[UIColor pinGray] fontColor:[UIColor whiteColor] letterColor:[UIColor whiteColor] animated:NO];
     }
     
     sender.titleLabel.alpha = 1.0;

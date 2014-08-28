@@ -21,8 +21,8 @@
     
     NSString *versionName = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
     NSString *versionCode = [infoDictionary objectForKey:@"CFBundleVersion"];
-    
-    return [NSString stringWithFormat:@"KnCWallet %@%@%@",versionName,versionCode,DIRECTORY_UA_KEY];
+
+    return [NSString stringWithFormat:@"KnCWallet~{%@}~{%@}~{iOS}~{%@}",versionName,versionCode,DIRECTORY_UA_KEY];
 }
 
 +(void)setRemoved:(BOOL)removed
@@ -135,7 +135,8 @@
     if(isUpdate){
         
         NSString *key = sent ? @"senderNote" : @"receiverNote";
-        transaction = [NSDictionary dictionaryWithObjectsAndKeys:encodedAdditionalPayload,@"payload", note, key, nil];
+        NSString *sentKey = sent ? @"sentFrom" : @"sentTo";
+        transaction = [NSDictionary dictionaryWithObjectsAndKeys:encodedAdditionalPayload,@"payload", note, key, [self telephoneNumber], sentKey, nil];
         
     }else{
         

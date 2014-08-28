@@ -5,7 +5,7 @@
 "NO" = "No";
 "CANCEL" = "Cancel";
 "SHARE" = "Share";
-"ALERT_ERROR_TITLE" = "An problem occurred";
+"ALERT_ERROR_TITLE" = "A problem occurred";
 "REMOVE" = "Remove";
 "DELETE" = "Delete";
 "EDIT" = "Edit";
@@ -19,17 +19,20 @@
 "HOME" = "Home";
 "SEND" = "Send";
 "RECEIVE" = "Receive";
+"TOP_SYNC_IN_PROGRESS" = "Syncing, please wait.";
+"TOP_SYNC_IN_PROGRESS_SUBTITLE" = "This may take 5 minutes or more";
 
 /* Home */
 "HOME_HISTORY" = "Transactions";
 "HOME_FROM" = "from";
 "HOME_TO" = "to";
-"NO_TRANSACTIONS" = "You have no transactions yet.";
+"NO_TRANSACTIONS" = "You have no transactions yet";
 "HOME_SEG_SENT" = "Sent";
 "HOME_SEG_ALL" = "All";
 "HOME_SEG_RECEIVED" = "Received";
 "HOME_TX_HAS_NO_ADDRESS" = "Transaction has no address";
 "HOME_UNKNOWN_COUNTERPART" = "Unknown";
+"TX_INCL_FEE_PATTERN" = "incl. fee %@";
 
 "CONNECTION_WARNING_TITLE" = "Connection error";
 "CONNECTION_WARNING_MESSAGE" = "Unable to connect to network";
@@ -67,12 +70,26 @@
 "TX_IMPOSSIBLE_FEE_TITLE" = "Unable to perform transaction";
 "TX_IMPOSSIBLE_FEE_MESSAGE" = "The transaction fee for the size of this transaction will be to large to implement";
 
+
+"SEND_INFO_MESSAGE_TITLE" = "KnC Message";
+"SEND_INFO_MESSAGE_MESSAGE" = "All users of the KnC apps can add a message to transactions";
+
+"SEND_INFO_NOTE_TITLE" = "Private Note";
+"SEND_INFO_NOTE_MESSAGE" = "Use private notes as a personal reminder for what the transaction was for";
+
+"SEND_SPENDABLE_BALANCE" = "Spendable balance";
+"SEND_WAIT_FOR_SYNC" = "Wait for sync";
+"SEND_WAIT_FOR_SYNC_SUBTITLE" = "Please wait for your wallet to Synchronise with the Bitcoin Network";
+
+"SEND_SYNC_FAILED" = "Sync failed";
+"SEND_SYNC_FAILED_SUBTITLE" = "Needs to be synced";
+
 /* Share */
-"SHARE_FACEBOOK_PATTERN" = "I'm usign the KnC Bitcoin Wallet for iOS, it makes sharing Bitcoin with friends super easy! %@";
-"SHARE_TWITTER_PATTERN" = "I'm usign the KnC Bitcoin Wallet for iOS, it makes sharing Bitcoin with friends super easy! %@";
-"SHARE_WEIBO_PATTERN" = "I'm usign the KnC Bitcoin Wallet for iOS, it makes sharing Bitcoin with friends super easy! %@";
-"SHARE_MESSAGE_PATTERN" = "I'm usign the KnC Bitcoin Wallet for iOS, it makes sharing Bitcoin with friends super easy! %@";
-"SHARE_MAIL_PATTERN" = "Hi!\n\nPlease use the following address to send me coins: %@";
+"SHARE_FACEBOOK_PATTERN" = "The KnC Bitcoin Wallet makes sharing with friends super easy! www.kncwallet.com %@";
+"SHARE_TWITTER_PATTERN" = "KnC Bitcoin Wallet makes sharing with friends super easy! www.kncwallet.com %@";
+"SHARE_WEIBO_PATTERN" = "KnC Bitcoin Wallet makes sharing with friends super easy! www.kncwallet.com %@";
+"SHARE_MESSAGE_PATTERN" = "The KnC Bitcoin Wallet makes sharing with friends super easy! www.kncwallet.com %@";
+"SHARE_MAIL_PATTERN" = "Hi!\n\nPlease use the following address to send me bitcoin: %@";
 
 /* Settings */
 
@@ -87,7 +104,7 @@
 "SETTINGS_REMOVE_PIN_SUBTITLE" = "Not recommended";
 
 "SETTINGS_REMOVE_DETAILS_TITLE" = "Remove my details";
-"SETTINGS_REMOVE_DETAILS_SUBTITLE" = "Remove number, address from KnC Directory";
+"SETTINGS_REMOVE_DETAILS_SUBTITLE" = "Remove number and address from KnC Directory";
 "SETTINGS_REMOVE_DETAILS_REMOVING" = "Removing";
 "SETTINGS_REMOVE_DETAILS_REMOVED" = "Removed";
 
@@ -97,7 +114,7 @@
 
 "SETTINGS_WALLET" = "Wallet";
 "SETTINGS_RESTORE_WALLET_TITLE" = "Start or restore wallet";
-"SETTINGS_RESTORE_WALLET_SUBTITLE" = "Wipe this wallet and start or restore another";
+"SETTINGS_RESTORE_WALLET_SUBTITLE" = "Wipe this wallet and start or restore another from a 12 word seed";
 
 "SETTINGS_SHOW_BACKUP_PHRASE_TITLE" = "Show wallet seed";
 "SETTINGS_SHOW_BACKUP_PHRASE_SUBTITLE" = "Displays this wallets 12 word seed";
@@ -109,7 +126,7 @@
 "SETTINGS_ADDRESS_BOOK_SUBTITLE" = "";
 
 "SETTINGS_BACKUP_WALLET_TITLE" = "Backup Wallet";
-"SETTINGS_BACKUP_WALLET_SUBTITLE" = "Backup your wallet seed to iCloud or e-mail";
+"SETTINGS_BACKUP_WALLET_SUBTITLE" = "Backup your wallet seed to iCloud or encrypted e-mail";
 "SETTINGS_BACKUP_ICLOUD_TITLE" = "Saved backups";
 "SETTINGS_BACKUP_ICLOUD_SUBTITLE" = "View your stored iCloud backups";
 
@@ -163,10 +180,19 @@
 "CONTACT_OLD_ADDRESSES" = "Other known addresses";
 "NAME" = "Name";
 "ADDRESS" = "Address";
-"TELEPHONENUMBER" = "Telephonenumber";
+"TELEPHONENUMBER" = "Telephone number";
 
 "CONTACTS_UPDATED_PATTERN" = "%i contacts added";
 "ERROR_DOWNLOADING_CONTACTS" = "Error downloading contacts";
+
+"CONTACT_ADVANCED_ACTIONS" = "Advanced";
+"CONTACT_DELETE" = "Delete contact";
+"CONTACT_DELETE_CONFIRM" = "Delete contact?";
+
+"CONTACT_SOURCE" = "Contact source";
+"SOURCE_DIRECTORY" = "KnC Directory";
+"SOURCE_ONENAME" = "OneName.io";
+"SOURCE_NO_SOURCE" = "None";
 
 /* Backup phrase */
 "BACKUP_PHRASE" = "Backup phrase";
@@ -229,11 +255,15 @@
 "BACKUP_RESTORE" = "Restore";
 "BACKUP_RESTORE_FILE" = "File";
 "BACKUP_WRONG_PASSWORD" = "Wrong password";
-"BACKUP_SAME_SEED" = "This is valid, encrypted, current backup.";
+"BACKUP_SAME_SEED" = "This is a valid backup and the seed is currently in use.";
 "BACKUP_RESTORE_PROGRESS_STARTED" = "Backup unlocked";
 
 "BACKUP_RESTORE_SELECTED_PHRASE_TITLE" = "Restore this backup phrase?";
 "BACKUP_ALREADY_EXIST" = "This backup phrase already exists in your iCloud";
+"BACKUP_RESTORE_SHEET_BUTTON_TITLE" = "Restore backup phrase";
+"BACKUP_DELETE_PHRASE" = "Delete this backup phrase?";
+"BACKUP_PHRASE_DELETED" = "Deleted";
+"UNABLE_TO_DELETE_PHRASE" = "Unable to delete backup phrase";
 
 /* Denomination */
 "DENOMINATION" = "Denomination";
@@ -258,8 +288,14 @@
 "TX_LABEL_PREVIOUSLY_USED" = "Previously used notes";
 "ALERT_NEW_TX_LABEL_TITLE" = "Add a note to the transaction?";
 "ALERT_NEW_TX_LABEL_MESSAGE" = "Use notes as a reminder of the transaction's purpose";
-
+"ERROR_UPLOADING_TX_INFO" = "Unable to backup label";
 
 /* Hints and tips */
 "HINTS_TITLE" = "Hints & Tips";
-"HINTS_LONG_TEXT" = "The tips below are important. If you are new to Bitcoin, please read them carefully.\n\nMore details and helpful information can be found on our website www.kncwallet.com\n\nPlease backup your 12 word seed, we do not keep a copy of this and we cannot recover this if your phone is lost or stolen. KnC do not keep copies of your wallet or any of your passwords or PINs.\n\nBitcoins are stored on your phone. If you lose your phone you may lose your Bitcoins!.\n\nOnly carry small amounts of Bitcoin on your phone, treat them like physical cash, just carry what you need for a day or 2.\n\nBefore you uninstall or delete your app data, remember to move your Bitcoins to another wallet first as deleting your app data will delete your Bitcoins!\n\nUse a PIN to protect your phone and your KnC Wallet. You can enable the KnC Wallet PIN in the settings page.\n\nFinally, have fun with Bitcoin!\n\nFor full terms and conditions of use, please see www.kncwallet.com\n\n";
+"HINTS_LONG_TEXT" = "The tips below are important. If you are new to Bitcoin, please read them carefully.\n\nMore details and helpful information can be found on our website www.kncwallet.com\n\nPlease backup your 12 word seed, we do not keep a copy of this and we cannot recover this if your phone is lost or stolen. KnC do not keep copies of your wallet or any of your passwords or PINs.\n\nBitcoins are stored on your phone. If you lose your phone you may lose your Bitcoins!\n\nOnly carry small amounts of Bitcoin on your phone, treat them like physical cash, just carry what you need for a day or 2.\n\nBefore you uninstall or delete your app data, remember to move your Bitcoins to another wallet first as deleting your app data will delete your Bitcoins!\n\nUse a PIN to protect your phone and your KnC Wallet. You can enable the KnC Wallet PIN in the settings page.\n\nFinally, have fun with Bitcoin!\n\nFor full terms and conditions of use, please see www.kncwallet.com\n\n";
+
+/* One name */
+"ONENAME_SEARCHING_FOR_USERNAME" = "Searching OneName for %@";
+"ONENAME_USER_NOT_FOUND" = "No OneName user named \"%@\" found";
+"ONENAME_SEARCH_FOR_USERNAME" = "Search for OneName user";
+

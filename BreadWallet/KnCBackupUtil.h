@@ -12,4 +12,5 @@
 -(void)openDocument:(NSString*)fileName completionCallback:(void (^)(BOOL success, KnCDocument * document, NSString *message))completion;
 -(NSString*)decryptDocumentContent:(KnCDocument*)document withKey:(NSString*)key;
 -(NSString*)decrypt:(NSString*)content withKey:(NSString*)key;
+-(void)deleteBackupPhrase:(NSString*)phrase callback:(void (^)(BOOL success, NSString *message))completion;
 @end

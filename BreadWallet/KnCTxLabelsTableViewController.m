@@ -101,6 +101,7 @@ static NSString *cellIdentifierRecent = @"Cell";
 -(void)save
 {
     [KnCTxDataUtil saveLabel:self.input toTx:self.txHash];
+    [self saveOnKnCDirectory:nil];
 }
 
 -(void)saveOnKnCDirectory:(NSMutableDictionary*)payload
@@ -122,7 +123,7 @@ static NSString *cellIdentifierRecent = @"Cell";
     [KnCDirectory updateTxRequest:counterpart note:self.input sent:sent>0 txId:self.txHash payload:payload completionCallback:^(NSDictionary *response) {
         
     } errorCallback:^(NSError *error) {
-        [SVProgressHUD showErrorWithStatus:@"ERROR_UPLOADING_TX_INFO"];
+        [SVProgressHUD showErrorWithStatus:[String key:@"ERROR_UPLOADING_TX_INFO"]];
     }];
     
     

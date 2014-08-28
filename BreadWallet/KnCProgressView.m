@@ -57,10 +57,14 @@
     
     [[view layer] addSublayer:shapeLayer];
     
+    CGPathRelease(path);
+    
 }
 
 -(void)animateCallback
 {
+    
+    
     if(self.viewA.frame.origin.x > self.frame.size.width){
         [self setOrigin:CGPointMake(0, 0) toView:self.viewA];
         [self setOrigin:CGPointMake(-self.frame.size.width, 0) toView:self.viewB];
@@ -72,14 +76,20 @@
     a.x+=5;
     b.x+=5;
     
+    
+    __weak id weakSelf = self;
+    __weak id weakA = self.viewA;
+    __weak id weakB = self.viewB;
+    
     [UIView animateWithDuration:0.025 animations:^{
-        [self setOrigin:a toView:self.viewA];
-        [self setOrigin:b toView:self.viewB];
+        [weakSelf setOrigin:a toView:weakA];
+        [weakSelf setOrigin:b toView:weakB];
     } completion:^(BOOL finished) {
-        [self animateCallback];
+        [weakSelf animateCallback];
     }];
     
 }
+
 
 -(void)setOrigin:(CGPoint)origin toView:(UIView*)view
 {

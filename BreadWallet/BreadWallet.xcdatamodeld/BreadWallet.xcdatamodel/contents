@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13D65" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="5064" systemVersion="13E28" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="BRAddressEntity" representedClassName="BRAddressEntity" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <attribute name="index" attributeType="Integer 32" defaultValueString="0" indexed="YES" syncable="YES"/>
@@ -50,6 +50,7 @@
     </entity>
     <entity name="KnCContact" representedClassName="KnCContact" syncable="YES">
         <attribute name="address" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="data" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="imageIdentifier" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="label" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
@@ -73,7 +74,7 @@
         <element name="BRTransactionEntity" positionX="0" positionY="0" width="128" height="120"/>
         <element name="BRTxInputEntity" positionX="0" positionY="0" width="128" height="118"/>
         <element name="BRTxOutputEntity" positionX="0" positionY="0" width="128" height="150"/>
-        <element name="KnCContact" positionX="459" positionY="11" width="128" height="103"/>
+        <element name="KnCContact" positionX="459" positionY="11" width="128" height="120"/>
         <element name="KnCContactImage" positionX="243" positionY="90" width="128" height="73"/>
         <element name="KnCKnownAddress" positionX="223" positionY="87" width="128" height="75"/>
         <element name="KnCTxData" positionX="207" positionY="81" width="128" height="73"/>

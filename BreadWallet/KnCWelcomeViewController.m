@@ -1,7 +1,7 @@
 
 #import "KnCWelcomeViewController.h"
 
-#import "UIViewController+KnC.h"
+#import "KnCViewController+UIViewController.h"
 
 #import "KnCDirectory.h"
 
@@ -77,12 +77,37 @@
     self.defaultCountry.callingCode = @"44";
     self.defaultCountry.isoCode = @"GB";
     
+    NSLocale *locale = [NSLocale currentLocale];
+    NSString *countryCode = [locale objectForKey: NSLocaleCountryCode];
+    
+    if(countryCode){
+        NSString *callingCode = [self.phoneFormat callingCodeForCountryCode:countryCode];
+        if(callingCode){
+            self.defaultCountry.callingCode = callingCode;
+            self.defaultCountry.displayName = [[NSLocale localeWithLocaleIdentifier:@"en_US"] displayNameForKey:NSLocaleCountryCode value:countryCode];
+            self.defaultCountry.isoCode = countryCode;
+        }
+    }
+    
     [self didPickCountry:self.defaultCountry];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(timerLabelTapped:)];
     tap.numberOfTapsRequired = 1;
     [self.timerLabel addGestureRecognizer:tap];
     self.active = YES;
+    
+    CGFloat borderWidth = 1.0f;
+    CGColorRef borderColor = [UIColor kncGray].CGColor;
+    
+    self.phoneNumberField.layer.borderWidth = borderWidth;
+    self.phoneNumberField.layer.borderColor = borderColor;
+    self.phoneNumberField.layer.sublayerTransform = CATransform3DMakeTranslation(10, 0, 0);
+    
+    self.countryNumberField.layer.borderWidth = borderWidth;
+    self.countryNumberField.layer.borderColor = borderColor;
+    
+    self.codeField.layer.borderWidth = borderWidth;
+    self.codeField.layer.borderColor = borderColor;
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -335,7 +360,7 @@
 
 -(void)startTimer
 {
-    self.secondsLeft = 10;//60 * 2;
+    self.secondsLeft = 60 * 2;
     [self timerTick:nil];
     [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerTick:) userInfo:nil repeats:YES];
 }

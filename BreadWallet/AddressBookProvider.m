@@ -13,7 +13,7 @@
 @implementation AddressBookProvider
 
 
-+(void)lookupContacts
++(NSMutableArray*)allContacts
 {
     CFErrorRef *error = nil;
     
@@ -46,6 +46,9 @@
         CFArrayRef allPeopleRef = ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering(addressBook, source, kABPersonSortByFirstName);
         
         NSArray *allPeople = CFBridgingRelease(allPeopleRef);
+        allPeopleRef = nil;
+        
+        CFRelease(source);
         
         CFIndex nPeople = allPeople.count;
         NSMutableArray* items = [NSMutableArray arrayWithCapacity:nPeople];
@@ -58,9 +61,9 @@
             
             //get First Name and Last Name
             
-            contacts.firstNames = (__bridge NSString*)ABRecordCopyValue(person, kABPersonFirstNameProperty);
+            contacts.firstNames = (__bridge_transfer NSString*)ABRecordCopyValue(person, kABPersonFirstNameProperty);
             
-            contacts.lastNames =  (__bridge NSString*)ABRecordCopyValue(person, kABPersonLastNameProperty);
+            contacts.lastNames =  (__bridge_transfer NSString*)ABRecordCopyValue(person, kABPersonLastNameProperty);
             
             if (!contacts.firstNames) {
                 contacts.firstNames = @"";
@@ -71,7 +74,7 @@
             
             // get contacts picture, if pic doesn't exists, show standart one
             
-            NSData  *imgData = (__bridge NSData *)ABPersonCopyImageData(person);
+            NSData  *imgData = (__bridge_transfer NSData *)ABPersonCopyImageData(person);
             contacts.image = [UIImage imageWithData:imgData];
             if (!contacts.image) {
                 contacts.image = [UIImage imageNamed:@"NOIMG.png"];
@@ -86,7 +89,7 @@
             for(CFIndex i=0;i<ABMultiValueGetCount(multiPhones);i++) {
                 
                 CFStringRef phoneNumberRef = ABMultiValueCopyValueAtIndex(multiPhones, i);
-                NSString *phoneNumber = (__bridge NSString *) phoneNumberRef;
+                NSString *phoneNumber = (__bridge_transfer NSString *) phoneNumberRef;
                 
                 if([phoneNumber rangeOfString:@"0"].location == 0){
                     phoneNumber = [NSString stringWithFormat:@"%@%@",callingCode,[phoneNumber substringFromIndex:1]];
@@ -102,17 +105,7 @@
             [contacts setNumbers:phoneNumbers];
             
             
-            NSMutableArray *contactEmails = [NSMutableArray new];
-            ABMultiValueRef multiEmails = ABRecordCopyValue(person, kABPersonEmailProperty);
-            
-            for (CFIndex i=0; i<ABMultiValueGetCount(multiEmails); i++) {
-                CFStringRef contactEmailRef = ABMultiValueCopyValueAtIndex(multiEmails, i);
-                NSString *contactEmail = (__bridge NSString *)contactEmailRef;
-                
-                [contactEmails addObject:contactEmail];
-                
-            }
-            
+            CFRelease(multiPhones);
             
             [items addObject:contacts];
             
@@ -120,22 +113,74 @@
             NSLog(@"Person is: %@ %@", contacts.firstNames, contacts.lastNames);
             NSLog(@"Phones are: %@", contacts.numbers);
 #endif
-            
-            
-            
-            
         }
         
-        [self lookupContactsRemote:items];
+
+        CFRelease(addressBook);
         
+        return items;
+
     } else {
 #ifdef DEBUG
         NSLog(@"Cannot fetch Contacts :( ");
 #endif
     }
     
+    return nil;
     
+}
+
++(void)checkDeletedContacts
+{
+    NSMutableArray *phoneContacts = [self allContacts];
+    if(phoneContacts){
+        [self removeDeletedContacts:phoneContacts];
+    }
+}
+
++(void)removeDeletedContacts:(NSArray*)phoneContacts
+{
+    if(!phoneContacts) return;
     
+    BOOL hasDeletedContact = NO;
+    
+    NSArray *appContacts = [KnCContact objectsMatching:@"phone != %@",nil];
+    
+    for(KnCContact *contact in appContacts){
+        BOOL found = NO;
+        NSString *fixedNumber = [self fixPhoneNumber:contact.phone];
+        for(ContactsData *contactData in phoneContacts){
+            for(NSString *phone in contactData.numbers){
+                if([fixedNumber isEqualToString:phone]){
+                    found = YES;
+                }
+            }
+        }
+        
+        if(found){
+            NSLog(@"did find %@ %@",contact.label, contact.phone);
+        }else{
+            NSLog(@"NO find %@ %@",contact.label, contact.phone);
+            hasDeletedContact = YES;
+            contact.status = STATUS_DELETED;
+        }
+    }
+    
+    if(hasDeletedContact){
+        [KnCContact saveContext];
+    }
+}
+
++(void)lookupContacts
+{
+    if(![KnCDirectory isRegistred] || [KnCDirectory isRemoved]){
+        return;
+    }
+    NSMutableArray *contacts = [self allContacts];
+    if(contacts){
+        [self removeDeletedContacts:contacts];
+        [self lookupContactsRemote:contacts];
+    }
 }
 
 +(NSString*)fixPhoneNumber:(NSString*)phoneNumber
@@ -150,6 +195,17 @@
 }
 +(KnCContact*)saveContact:(NSString *)label address:(NSString *)address phone:(NSString*)phone
 {
+    return [self saveContact:label address:address phone:phone source:nil];
+}
++(KnCContact*)saveContact:(NSString *)label address:(NSString *)address phone:(NSString*)phone source:(NSString*)source {
+    return [self saveContact:label address:address phone:phone source:source data:nil];
+}
++(KnCContact*)saveOneNameContact:(NSString *)label address:(NSString *)address username:(NSString*)username {
+    return [self saveContact:label address:address phone:nil source:SOURCE_ONENAME data:[NSDictionary dictionaryWithObject:username forKey:DATA_ONENAME_USERNAME]];
+}
+
++(KnCContact*)saveContact:(NSString *)label address:(NSString *)address phone:(NSString*)phone source:(NSString*)source data:(NSDictionary*)data
+{
     KnCContact *contact = [AddressBookProvider contactByAddress:address];
     if(!contact){
         contact = [KnCContact managedObject];
@@ -162,6 +218,9 @@
     }
     
     contact.phone = phone;
+    contact.source = source;
+    
+    contact.data = data;
     
     NSMutableDictionary *addresses = [NSMutableDictionary dictionaryWithDictionary:contact.address];
     if(![addresses objectForKey:address]){
@@ -192,6 +251,29 @@
     KnCKnownAddress *known = search.firstObject;
     
     return known.contact;
+}
+
++(void)deleteContact:(KnCContact*)contact
+{
+    NSArray *addresses = [contact.address allKeys];
+    
+    for(NSString *address in addresses){
+        NSArray *search = [KnCKnownAddress objectsMatching:@"address == %@",address];
+        for(KnCKnownAddress *known in search){
+            [known deleteObject];
+        }
+    }
+    
+    if(contact.imageIdentifier){
+        NSArray *search = [KnCContactImage objectsMatching:@"identifier == %@",contact.imageIdentifier];
+        for(KnCContactImage *image in search){
+            [image deleteObject];
+        }
+    }
+    
+    [contact deleteObject];
+    
+    [KnCContact saveContext];
 }
 
 +(void)setImage:(UIImage*)image toContact:(KnCContact*)contact
@@ -345,6 +427,9 @@
                             contact = [search firstObject];
                         }
                         
+                        contact.source = SOURCE_DIRECTORY;
+                        contact.status = nil;
+                        
                         if(addressBookContact.image && !contact.imageIdentifier){
                             
                             [AddressBookProvider setImage:addressBookContact.image  toContact:contact];
@@ -400,6 +485,7 @@
 
 +(void)lookupContactsRemote:(NSMutableArray*)items
 {
+    
     NSMutableArray *numbers = [NSMutableArray array];
     for(ContactsData *contact in items){
         

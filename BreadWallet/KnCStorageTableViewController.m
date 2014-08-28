@@ -13,10 +13,13 @@
 
 @property (nonatomic, strong) NSMutableArray *seeds;
 @property (nonatomic, strong) KnCBackupUtil *backupUtil;
+@property (nonatomic, strong) NSString *selectedPhrase;
 
 @end
 
 @implementation KnCStorageTableViewController
+
+#define TAG_SEED_SHEET 1
 
 static NSString *cellIdentifier = @"FileCell";
 
@@ -103,6 +106,32 @@ static NSString *cellIdentifier = @"FileCell";
     }
 }
 
+-(void)deletePhrase:(NSString*)phrase
+{
+    [SVProgressHUD show];
+    
+    [self.backupUtil deleteBackupPhrase:phrase callback:^(BOOL success, NSString *message) {
+       
+        [SVProgressHUD dismiss];
+        
+        if(success){
+            
+            [SVProgressHUD showSuccessWithStatus:message];
+            
+            NSInteger index = [self.seeds indexOfObject:phrase];
+            if(index >= 0 && index < self.seeds.count){
+                //[self.seeds removeObjectAtIndex:index];
+            }
+            
+        }else{
+            [SVProgressHUD showErrorWithStatus:message];
+        }
+        
+        [self.tableView reloadData];
+        
+    }];
+}
+
 -(void)dismiss
 {
     if(self.navigationController.viewControllers.count > 1){
@@ -112,13 +141,41 @@ static NSString *cellIdentifier = @"FileCell";
     }
 }
 
+
 -(void)didSelectPhrase:(NSString*)phrase
 {
-    KnCAlertView *alert = [[KnCAlertView alloc]initWithTitle:[String key:@"BACKUP_RESTORE_SELECTED_PHRASE_TITLE"] message:phrase delegate:self cancelButtonTitle:[String key:@"NO"] otherButtonTitles:[String key:@"YES"], nil];
-    alert.block = ^{
-        [self restorePhrase:phrase];
-    };
-    [alert show];
+    self.selectedPhrase = [NSString stringWithString:phrase];
+    UIActionSheet *sheet = [[UIActionSheet alloc]initWithTitle:phrase delegate:self cancelButtonTitle:[String key:@"CANCEL"] destructiveButtonTitle:[String key:@"DELETE"] otherButtonTitles:[String key:@"BACKUP_RESTORE_SHEET_BUTTON_TITLE"], nil];
+    sheet.tag = TAG_SEED_SHEET;
+    [sheet showInView:self.view];
+}
+
+-(void)actionSheetCancel:(UIActionSheet *)actionSheet
+{
+    [self.tableView reloadData];
+}
+
+-(void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if(actionSheet.tag == TAG_SEED_SHEET){
+        
+        if([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:[String key:[String key:@"BACKUP_RESTORE_SHEET_BUTTON_TITLE"]]]){
+            KnCAlertView *alert = [[KnCAlertView alloc]initWithTitle:[String key:@"BACKUP_RESTORE_SELECTED_PHRASE_TITLE"] message:self.selectedPhrase delegate:self cancelButtonTitle:[String key:@"NO"] otherButtonTitles:[String key:@"YES"], nil];
+            alert.block = ^{
+                [self restorePhrase:self.selectedPhrase];
+            };
+            [alert show];
+        }else if([[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:[String key:[String key:@"DELETE"]]]){
+            KnCAlertView *alert = [[KnCAlertView alloc]initWithTitle:[String key:@"BACKUP_DELETE_PHRASE"] message:self.selectedPhrase delegate:self cancelButtonTitle:[String key:@"NO"] otherButtonTitles:[String key:@"YES"], nil];
+            alert.block = ^{
+                [self deletePhrase:self.selectedPhrase];
+            };
+            [alert show];
+        }
+        
+    }
+    
+    [self.tableView reloadData];
 }
 
 -(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
@@ -129,6 +186,8 @@ static NSString *cellIdentifier = @"FileCell";
     
     [self.tableView reloadData];
 }
+
+
 
 #pragma mark - Table view delegate
 

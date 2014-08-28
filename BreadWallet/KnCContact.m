@@ -1,14 +1,17 @@
 
 #import "KnCContact.h"
 #import "NSManagedObject+Sugar.h"
+#import "String.h"
 
 @implementation KnCContact
 
 @dynamic phone;
 @dynamic label;
 @dynamic address;
+@dynamic data;
 @dynamic imageIdentifier;
-
+@dynamic source;
+@dynamic status;
 
 -(NSString*)mostRecentAddress
 {
@@ -41,9 +44,50 @@
         abc.address = address;
         abc.phone = self.phone;
         abc.name = self.label;
+        abc.source = self.source;
         return abc;
     }
     return nil;
+}
+
+-(NSString*)displayStringSource
+{
+    if(self.source){
+        if([self.source isEqualToString:SOURCE_DIRECTORY]){
+            return [String key:@"SOURCE_DIRECTORY"];
+        }else if([self.source isEqualToString:SOURCE_ONENAME]){
+            return [String key:@"SOURCE_ONENAME"];
+        }
+    }
+    
+    return [String key:@"SOURCE_NO_SOURCE"];
+}
+
+-(void)setOneNameUsername:(NSString*)username
+{
+    [self save:username toKey:DATA_ONENAME_USERNAME];
+}
+
+-(NSString*)oneNameUsername
+{
+    if(self.data){
+        return [self.data objectForKey:DATA_ONENAME_USERNAME];
+    }
+    return nil;
+}
+
+-(void)save:(NSString*)value toKey:(NSString*)key
+{
+    if(!self.data){
+        self.data = [NSDictionary dictionary];
+    }
+    
+    NSMutableDictionary *newData = [NSMutableDictionary dictionaryWithDictionary:self.data];
+    
+    [newData setObject:value forKey:key];
+    
+    self.data = [NSDictionary dictionaryWithDictionary:newData];
+    
 }
 
 @end

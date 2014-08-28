@@ -108,6 +108,7 @@ static NSString *cellIdentifierTextField = @"TextCell";
         cell.textField.text = self.inputPassword;
         cell.textField.placeholder = [String key:@"BACKUP_ENTER_PASSWORD"];
         cell.textField.delegate = self;
+        cell.textField.autocorrectionType = UITextAutocorrectionTypeNo;
         [cell.textField addTarget:self action:@selector(passwordDidChange:) forControlEvents:UIControlEventEditingChanged];
         
         return cell;

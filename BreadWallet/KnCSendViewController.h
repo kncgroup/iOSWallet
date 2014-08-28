@@ -23,6 +23,7 @@
 @property (nonatomic, weak) IBOutlet UIButton *btcButton;
 @property (nonatomic, weak) IBOutlet UIButton *fiatButton;
 @property (nonatomic, weak) IBOutlet UIButton *labelButton;
+@property (nonatomic, weak) IBOutlet UILabel *balanceInfoLabel;
 
 @property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
 

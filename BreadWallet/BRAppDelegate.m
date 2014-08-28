@@ -36,6 +36,7 @@
 #import "KnCRestoreBackupTableViewController.h"
 #import "KnCColor+UIColor.h"
 #import "KnCConstants.h"
+#import "AddressBookProvider.h"
 
 #if BITCOIN_TESTNET
 #warning testnet build
@@ -53,14 +54,15 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    NSString *identifier = [[NSBundle mainBundle] bundleIdentifier];
     
+    if(![identifier isEqualToString:@"com.kncwallet.app"]){
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:HOCKEYAPP_KEY];
+        [[BITHockeyManager sharedHockeyManager] startManager];
+        [[BITHockeyManager sharedHockeyManager].authenticator authenticateInstallation];
+        [BITHockeyManager sharedHockeyManager].debugLogEnabled = YES;
+    }
     
-    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:HOCKEYAPP_KEY];
-    [[BITHockeyManager sharedHockeyManager] startManager];
-    [[BITHockeyManager sharedHockeyManager].authenticator authenticateInstallation];
-    
-    [BITHockeyManager sharedHockeyManager].debugLogEnabled = YES;
-  
     [self setupAppearance];
     
     // use background fetch to stay synced with the blockchain
@@ -149,6 +151,7 @@
     if(self.shouldLock){
         [self checkPin];
     }
+    [self checkContacts];
 }
 
 -(void)applicationDidEnterBackground:(UIApplication *)application
@@ -303,6 +306,11 @@ performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionH
 -(BOOL)emailBackup:(NSString*)key delegate:(UIViewController<MFMailComposeViewControllerDelegate>*)sender
 {
     return [self.backupUtil emailBackup:key delegate:sender];
+}
+
+-(void)checkContacts
+{
+    [AddressBookProvider lookupContacts];
 }
 
 //#pragma mark - CBCentralManagerDelegate

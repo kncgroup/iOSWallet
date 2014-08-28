@@ -28,6 +28,7 @@ static NSString *cellIdentifier = @"LicenseCell";
                       [[KnCLicense alloc]initWithTitle:@"RMPhoneFormat" andUrl:@"https://github.com/rmaddy/RMPhoneFormat" andLicense:@"LICENSE_RMPHONEFORMAT"],
                       [[KnCLicense alloc]initWithTitle:@"FBEncryptor" andUrl:@"https://github.com/dev5tec/FBEncryptor" andLicense:@"LICENSE_FBENCRYPT"],
                       [[KnCLicense alloc]initWithTitle:@"SSToolkit" andUrl:@"https://github.com/samsoffes/sstoolkit" andLicense:@"LICENSE_SSTOOLKIT"],
+                      [[KnCLicense alloc]initWithTitle:@"SDWebImage" andUrl:@"https://github.com/rs/SDWebImage" andLicense:@"LICENSE_SDWEBIMAGE"]
                       ];
     
     self.gfx = @[

@@ -31,10 +31,29 @@
 #import <openssl/ecdsa.h>
 #import <openssl/obj_mac.h>
 
+#define PATH_STYLE_BIP32 1
+#define PATH_STYLE_BIP44 0
+
 #define BIP32_PRIME    0x80000000
 #define BIP32_SEED_KEY "Bitcoin seed"
 #define BIP32_XPRV     "\x04\x88\xAD\xE4"
 #define BIP32_XPUB     "\x04\x88\xB2\x1E"
+#define BIP32_ACCOUNT  0
+
+#define BIP44_PURPOSE   44
+#define BIP44_COIN_TYPE 0
+#define BIP44_ACCOUNT   0
+
+#if BITCOIN_TESTNET
+#undef BIP44_COIN_TYPE
+#define BIP44_COIN_TYPE 1
+#endif
+
+#if PATH_STYLE_BIP32
+#if PATH_STYLE_BIP44
+#error Choose only one path style
+#endif
+#endif
 
 // BIP32 is a scheme for deriving chains of addresses from a seed value
 // https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki
@@ -184,8 +203,16 @@ static NSString *serialize(uint8_t depth, uint32_t fingerprint, uint32_t child, 
     [secret appendBytes:I.bytes length:32];
     [chain appendBytes:(const unsigned char *)I.bytes + 32 length:32];
     [mpk appendBytes:[[[BRKey keyWithSecret:secret compressed:YES] hash160] bytes] length:4];
+
+#if PATH_STYLE_BIP32
+    CKD(secret, chain, BIP32_ACCOUNT   | BIP32_PRIME);
+ 
+#elif PATH_STYLE_BIP44
+    CKD(secret, chain, BIP44_PURPOSE   | BIP32_PRIME);
+    CKD(secret, chain, BIP44_COIN_TYPE | BIP32_PRIME);
+    CKD(secret, chain, BIP44_ACCOUNT   | BIP32_PRIME);
     
-    CKD(secret, chain, 0 | BIP32_PRIME); // account 0'
+#endif
 
     [mpk appendData:chain];
     [mpk appendData:[[BRKey keyWithSecret:secret compressed:YES] publicKey]];
@@ -233,9 +260,18 @@ static NSString *serialize(uint8_t depth, uint32_t fingerprint, uint32_t child, 
     
     [secret appendBytes:I.bytes length:32];
     [chain appendBytes:(const unsigned char *)I.bytes + 32 length:32];
-
-    CKD(secret, chain, 0 | BIP32_PRIME); // account 0'
+    
+#if PATH_STYLE_BIP32
+    CKD(secret, chain, BIP32_ACCOUNT   | BIP32_PRIME);
     CKD(secret, chain, internal ? 1 : 0); // internal or external chain
+    
+#elif PATH_STYLE_BIP44
+    CKD(secret, chain, BIP44_PURPOSE   | BIP32_PRIME);
+    CKD(secret, chain, BIP44_COIN_TYPE | BIP32_PRIME);
+    CKD(secret, chain, BIP44_ACCOUNT   | BIP32_PRIME);
+    CKD(secret, chain, internal ? 1 : 0); // internal or external chain
+    
+#endif
 
     for (NSNumber *i in n) {
         NSMutableData *prvKey = [NSMutableData secureDataWithCapacity:34];

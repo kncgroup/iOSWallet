@@ -6,4 +6,6 @@
 +(UIColor*)kncGray;
 +(UIColor*)disabledGray;
 +(UIColor*)sectionHeaderGray;
++(UIColor*)pinGray;
++(UIColor*)kncRed;
 @end

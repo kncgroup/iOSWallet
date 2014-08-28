@@ -7,6 +7,7 @@
 #import "SVProgressHUD.h"
 #import "KnCColor+UIColor.h"
 #import "KnCImageView+UIImageView.h"
+#import "KnCViewController+UIViewController.h"
 
 #define TAG_HEAD_IMAGE 100
 #define TAG_HEAD_IMAGE_LABEL 101
@@ -17,6 +18,8 @@
 #define TAG_ADDRESS 3
 #define TAG_PHONE 4
 
+#define ALERT_DELETE 5
+
 @interface KncContactTableViewController ()
 
 @property (nonatomic, strong) NSString *address;
@@ -25,7 +28,9 @@
 
 @property (nonatomic, strong) UIImage *image;
 
-@property (nonatomic, strong) NSMutableArray *otherKnownAddresses;
+@property (nonatomic, strong) NSString *contactSource;
+
+@property (nonatomic, strong) NSString *contactSourceDisplayString;
 
 @property (nonatomic) BOOL isEditMode;
 
@@ -65,8 +70,6 @@ static NSString *cellTextFieldIdentifierOther = @"TextFieldCellOther";
     
     if(self.address){
         
-        self.otherKnownAddresses = [NSMutableArray array];
-        
         [self.inputs setObject:[NSString stringWithString:self.address] forKey:[self key:TAG_ADDRESS]];
         
         KnCContact *contact = [AddressBookProvider contactByAddress:self.address];
@@ -91,13 +94,10 @@ static NSString *cellTextFieldIdentifierOther = @"TextFieldCellOther";
             NSString *mostRecent = [contact mostRecentAddress];
             [self.inputs setObject:[NSString stringWithString:mostRecent] forKey:[self key:TAG_ADDRESS]];
             
-            for(NSString *address in [contact.address allKeys]){
-                if(![address isEqualToString:mostRecent]){
-                    [self.otherKnownAddresses addObject:[NSString stringWithString:address]];
-                }
-            }
-            
             self.isEditMode = YES;
+
+            self.contactSource = contact.source;
+            self.contactSourceDisplayString = [contact displayStringSource];
             
         }
     }else{
@@ -272,7 +272,7 @@ static NSString *cellTextFieldIdentifierOther = @"TextFieldCellOther";
     if(inputAddress && inputName){
         NSString *phone = [self.inputs objectForKey:[self key:TAG_PHONE]];
         
-        KnCContact *contact = [AddressBookProvider saveContact:inputName address:inputAddress phone:phone];
+        KnCContact *contact = [AddressBookProvider saveContact:inputName address:inputAddress phone:phone source:self.contactSource];
         
         if(self.image){
             [AddressBookProvider setImage:self.image toContact:contact];
@@ -319,9 +319,20 @@ static NSString *cellTextFieldIdentifierOther = @"TextFieldCellOther";
     }else if(section == 2){
         return [String key:@"TELEPHONENUMBER"];
     }else if(section == 3){
-        return [String key:@"CONTACT_OLD_ADDRESSES"];
+        return [String key:@"CONTACT_SOURCE"];
+    }else if(section == 4){
+        return [String key:@"CONTACT_ADVANCED_ACTIONS"];
     }
     return nil;
+}
+
+
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if(section == 4){
+        return [self dangerousTableViewHeader:[self tableView:tableView titleForHeaderInSection:section]];
+    }
+    return [super tableView:tableView viewForHeaderInSection:section];
 }
 
 #pragma mark - Table view data source
@@ -332,14 +343,16 @@ static NSString *cellTextFieldIdentifierOther = @"TextFieldCellOther";
     if(!self.isEditMode){
         return 3;
     }
-    return 4;
+    
+    if(self.contactSource && [self.contactSource isEqualToString:SOURCE_DIRECTORY]){
+        return 4;
+    }
+    
+    return 5;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if(section == 3){
-        return self.otherKnownAddresses.count;
-    }
     return 1;
 }
 
@@ -365,19 +378,39 @@ static NSString *cellTextFieldIdentifierOther = @"TextFieldCellOther";
         cell.textField.tag = [self tagForIndexPath:indexPath];
         NSString *input = [self.inputs objectForKey:[self key:cell.textField.tag]];
         cell.textField.text = input;
+        
+        if(indexPath.section == 0){
+            [cell.textField setAutocapitalizationType:UITextAutocapitalizationTypeWords];
+        }else{
+            [cell.textField setAutocapitalizationType:UITextAutocapitalizationTypeNone];
+        }
+        
+        if(indexPath.section == 2){
+            [cell.textField setKeyboardType:UIKeyboardTypeNumberPad];
+        }else{
+            [cell.textField setKeyboardType:UIKeyboardTypeAlphabet];
+        }
+        
         cell.textField.delegate = self;
         [cell.textField addTarget:self
                           action:@selector(textFieldChanged:)
                 forControlEvents:UIControlEventEditingChanged];
-        
+        cell.accessoryType = UITableViewCellAccessoryNone;
         cell.userInteractionEnabled = YES;
         
         return cell;
     }else if(indexPath.section == 3){
         KnCTextFieldTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellTextFieldIdentifierOther forIndexPath:indexPath];
         cell.userInteractionEnabled = NO;
-        cell.textField.text = [self.otherKnownAddresses objectAtIndex:indexPath.row];
+        cell.textField.text = self.contactSourceDisplayString;
+        cell.accessoryType = UITableViewCellAccessoryNone;
         [cell.textField setFont:[UIFont fontWithName:@"HelveticaNeue-Thin" size:14.0f]];
+        return cell;
+    }else if(indexPath.section == 4){
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+        cell.textLabel.text = [String key:@"CONTACT_DELETE"];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.detailTextLabel.text = nil;
         return cell;
     }
     
@@ -387,60 +420,39 @@ static NSString *cellTextFieldIdentifierOther = @"TextFieldCellOther";
     return cell;
 }
 
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+-(void)askDelete
 {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:[String key:@"CONTACT_DELETE_CONFIRM"] message:nil delegate:self cancelButtonTitle:[String key:@"CANCEL"] otherButtonTitles:[String key:@"YES"], nil];
+    alert.tag = ALERT_DELETE;
+    [alert show];
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+-(void)deleteContact
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    KnCContact *contact = [AddressBookProvider contactByAddress:self.address];
+    [AddressBookProvider deleteContact:contact];
+    [self.delegate contactTableViewControllerDelegate:self updatedContact:nil];
+    [self dismiss:nil];
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+-(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
+    if(buttonIndex == 1 && alertView.tag == ALERT_DELETE){
+        [self deleteContact];
+    }
 }
-*/
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
 #pragma mark - Table view delegate
 
 // In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here, for example:
-    // Create the next view controller.
-    <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:<#@"Nib name"#> bundle:nil];
     
-    // Pass the selected object to the new view controller.
-    
-    // Push the view controller.
-    [self.navigationController pushViewController:detailViewController animated:YES];
+    if(indexPath.section == 4){
+        [self askDelete];
+        [self.tableView reloadData];
+    }
 }
-*/
+
 
 @end

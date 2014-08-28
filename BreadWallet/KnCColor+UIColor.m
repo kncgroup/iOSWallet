@@ -23,4 +23,14 @@
     return [UIColor colorWithRed:76.0/255.0 green:76.0/255.0 blue:76.0/255.0 alpha:1.0];
 }
 
++(UIColor*)pinGray
+{
+    return [UIColor colorWithRed:200.0/255.0 green:200.0/255.0 blue:200.0/255.0 alpha:1.0];
+}
+
++(UIColor*)kncRed
+{
+    return [UIColor colorWithRed:255.0f/255.0f green:106.0f/255.0f blue:81.0f/255.0 alpha:1.0];
+}
+
 @end

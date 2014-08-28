@@ -23,6 +23,7 @@
 #import "BRPeerManager.h"
 #import "BRAppDelegate.h"
 #import "KnCColor+UIColor.h"
+#import "KnCViewController+UIViewController.h"
 
 #define ALERT_REMOVE_DETAILS 2
 #define ALERT_RESET_BLOCK_CHAIN 3
@@ -316,24 +317,7 @@ static NSString *cellIdentifier = @"SettingsCell";
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     if(section == 5){
-        
-        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 40)];
-        
-        UIImageView *iv = [[UIImageView alloc]initWithFrame:CGRectMake(15, 16, 13,13)];
-        [iv setTintColor:[UIColor colorWithRed:255.0f/255.0f green:106.0f/255.0f blue:81.0f/255.0 alpha:1.0]];
-        [iv setImage:[[UIImage imageNamed:@"warning_inverted"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
-        [iv setContentMode:UIViewContentModeScaleAspectFill];
-        [view addSubview:iv];
-        
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(32, 3, self.view.frame.size.width, view.frame.size.height)];
-        [label setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
-        [label setTextColor:[UIColor sectionHeaderGray]];
-        [label setText:[[self tableView:tableView titleForHeaderInSection:section]uppercaseString]];
-        
-        [view addSubview:label];
-        
-        return view;
-        
+        return [self dangerousTableViewHeader:[self tableView:tableView titleForHeaderInSection:section]];
     }
     return [super tableView:tableView viewForHeaderInSection:section];
 }

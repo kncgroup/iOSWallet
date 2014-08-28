@@ -2,6 +2,7 @@
 #import "KnCBalanceLabel.h"
 #import "CurrencyUtil.h"
 #import "KnCColor+UIColor.h"
+#import "String.h"
 @implementation KnCBalanceLabel
 
 - (id)initWithFrame:(CGRect)frame
@@ -50,7 +51,7 @@
             feeString = [CurrencyUtil stringForBtcAmount:fee withSymbol:NO];
         }
         
-        extra = [NSString stringWithFormat:@"incl. fee %@", feeString];
+        extra = [NSString stringWithFormat:[String key:@"TX_INCL_FEE_PATTERN"], feeString];
         
     }
     

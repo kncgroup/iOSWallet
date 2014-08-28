@@ -93,6 +93,11 @@ static NSString *cellIdentifierBalance = @"BalanceCell";
 
 -(void)settingsInvalidated
 {
+    [self clearCache];
+}
+
+-(void)clearCache
+{
     [self.rowHeights removeAllObjects];
     [self.txDataCache removeAllObjects];
     [self.nameCache removeAllObjects];
@@ -117,6 +122,7 @@ static NSString *cellIdentifierBalance = @"BalanceCell";
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+    [self clearCache];
 }
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -263,6 +269,8 @@ static NSString *cellIdentifierBalance = @"BalanceCell";
             if(sent > 0){
                 fromTo = [String key:@"HOME_TO"];
                 amount = received - sent;
+            }else{
+                fee = 0;
             }
             
             NSString *toName = [String key:@"HOME_UNKNOWN_COUNTERPART"];

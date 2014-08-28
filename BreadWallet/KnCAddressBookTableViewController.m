@@ -86,7 +86,7 @@ static NSString *cellIdentifier = @"ContactCell";
     
     BRWallet *wallet = [[BRWalletManager sharedInstance]wallet];
     
-    NSArray *coreDataContacts = [KnCContact allObjects];
+    NSArray *coreDataContacts = [KnCContact objectsMatching:@"status == %@",nil];
     
     for(KnCContact *contact in coreDataContacts){
         
@@ -176,10 +176,20 @@ static NSString *cellIdentifier = @"ContactCell";
     UIImage *image = [self imageForAddresBookContact:abc];
     if(image){
         cell.contactImage.image = image;
+        cell.contactImage.contentMode = UIViewContentModeCenter;
         [cell.contactImage applyCircleMask];
     }else{
         [cell.contactImage setImage:[UIImage imageNamed:@"contact-inverted-big"]];
+        cell.contactImage.contentMode = UIViewContentModeScaleAspectFill;
         [cell.contactImage clearMask];
+    }
+    
+    cell.sourceImage.image = nil;
+    
+    if([abc.source isEqualToString:SOURCE_DIRECTORY]){
+        cell.sourceImage.image = [UIImage imageNamed:@"source_knc"];
+    }else if([abc.source isEqualToString:SOURCE_ONENAME]){
+        cell.sourceImage.image = [UIImage imageNamed:@"source_on"];
     }
     
     [cell setNameString:abc.name];
@@ -208,7 +218,9 @@ static NSString *cellIdentifier = @"ContactCell";
 
 -(void)contactTableViewControllerDelegate:(id)sender updatedContact:(KnCContact*)contact
 {
-    [self.imageCache removeObjectForKey:[contact createAddressBookContactObject].address];
+    if(contact){
+        [self.imageCache removeObjectForKey:[contact createAddressBookContactObject].address];
+    }
     [self loadContacts];
     [self searchBar:self.searchBar textDidChange:self.searchBar.text];
 }

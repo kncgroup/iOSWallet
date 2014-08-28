@@ -161,6 +161,41 @@
     
 }
 
+-(void)deleteBackupPhrase:(NSString*)phrase callback:(void (^)(BOOL success, NSString *message))completion
+{
+    if(!self.ubiquitousURL){
+        completion(NO, [String key:@"BACKUP_ICLOUD_NOT_AVAILABLE"]);
+        return;
+    }
+    
+    NSUbiquitousKeyValueStore *store = [NSUbiquitousKeyValueStore defaultStore];
+    NSArray *current = [store arrayForKey:@"seeds"];
+    
+    if(!current){
+        completion(NO, [String key:@"UNABLE_TO_DELETE_PHRASE"]);
+        return;
+    }
+    
+    NSMutableArray *newArray = [NSMutableArray arrayWithArray:current];
+    
+    NSInteger indexOfPhrase = [newArray indexOfObject:phrase];
+    
+    BOOL ok = NO;
+    
+    if(indexOfPhrase >= 0 && indexOfPhrase < newArray.count){
+        [newArray removeObjectAtIndex:indexOfPhrase];
+        [store setObject:newArray forKey:@"seeds"];
+        ok = [store synchronize];
+    }
+    
+    if(ok){
+        completion(YES, [String key:@"BACKUP_PHRASE_DELETED"]);
+    }else{
+        completion(NO, [String key:@"UNABLE_TO_DELETE_PHRASE"]);
+    }
+
+}
+
 -(void)allBackups:(void (^)(BOOL success, NSArray *seeds, NSString *message))completion
 {
     if(!self.ubiquitousURL){

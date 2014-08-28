@@ -85,13 +85,13 @@
                         <action selector="selectCountry:" destination="-1" eventType="touchDown" id="HR3-UV-Occ"/>
                     </connections>
                 </button>
-                <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="+46" borderStyle="line" placeholder="+44" textAlignment="center" minimumFontSize="17" id="Ybv-fE-RTg">
+                <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="+46" placeholder="+44" textAlignment="center" minimumFontSize="17" id="Ybv-fE-RTg">
                     <rect key="frame" x="20" y="162" width="64" height="39"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
                 </textField>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" minimumFontSize="17" id="Yzg-Ap-Www">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" id="Yzg-Ap-Www">
                     <rect key="frame" x="83" y="162" width="217" height="39"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
